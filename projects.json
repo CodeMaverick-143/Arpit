@@ -1,0 +1,226 @@
+[
+    {
+        "name": "OverClock",
+        "description": "",
+        "tags": [
+            "Reactjs",
+            "SQL",
+            "Mongo",
+            "Go"
+        ],
+        "github": "https://github.com/CodeMaverick-143/OverClock",
+        "live": ""
+    },
+    {
+        "name": "Exam_Analytics_System",
+        "description": "",
+        "tags": [
+            "Python",
+            "Streamlit",
+            "LangGraph"
+        ],
+        "github": "https://github.com/CodeMaverick-143/Exam_Analytics_System",
+        "live": ""
+    },
+    {
+        "name": "Quick_Snatch_Platform",
+        "description": "",
+        "tags": [
+            "Reactjs",
+            "SQL",
+            "Go"
+        ],
+        "github": "https://github.com/CodeMaverick-143/Quick_Snatch_Platform",
+        "live": ""
+    },
+    {
+        "name": "Maverick Cli",
+        "description": "",
+        "tags": [
+            "NextJs",
+            "SQL",
+            "Express"
+        ],
+        "github": "https://github.com/CodeMaverick-143/Maverick-Cli",
+        "live": ""
+    },
+    {
+        "name": "Tekron-Apk",
+        "description": "",
+        "tags": [
+            "React Native",
+            "Express",
+            "Mongo"
+        ],
+        "github": "https://github.com/CodeMaverick-143/Tekron-Apk",
+        "live": ""
+    },
+    {
+        "name": "Recoil",
+        "description": "",
+        "tags": [
+            "Tauri",
+            "Reactjs",
+            "Rust"
+        ],
+        "github": "https://github.com/CodeMaverick-143/Recoil",
+        "live": "https://recoil.xplnhub.tech"
+    },
+    {
+        "name": "FR",
+        "description": "",
+        "tags": [
+            "Reactjs",
+            "Rust",
+            "Tauri"
+        ],
+        "github": "https://github.com/CodeMaverick-143/FR",
+        "live": ""
+    },
+    {
+        "name": "CodeNarrator",
+        "description": "",
+        "tags": [
+            "Javascript"
+        ],
+        "github": "https://github.com/CodeMaverick-143/CodeNarrator",
+        "live": ""
+    },
+    {
+        "name": "Slate-APK",
+        "description": "",
+        "tags": [
+            "React Native",
+            "Mongo"
+        ],
+        "github": "https://github.com/CodeMaverick-143/Slate-APK",
+        "live": ""
+    },
+    {
+        "name": "Newgate",
+        "description": "",
+        "tags": [
+            "Javascript",
+            "NPM"
+        ],
+        "github": "https://github.com/CodeMaverick-143/Newgate",
+        "live": ""
+    },
+    {
+        "name": "Sketchy",
+        "description": "",
+        "tags": [
+            "NextJs",
+            "Express",
+            "SQL"
+        ],
+        "github": "https://github.com/CodeMaverick-143/Sketchy",
+        "live": ""
+    },
+    {
+        "name": "Instagram_Analytics",
+        "description": "",
+        "tags": [
+            "Python"
+        ],
+        "github": "https://github.com/CodeMaverick-143/Instagram_Analytics",
+        "live": ""
+    },
+    {
+        "name": "Git_Stat_APK",
+        "description": "",
+        "tags": [
+            "React Native",
+            "Javascript"
+        ],
+        "github": "https://github.com/CodeMaverick-143/Git_Stat_APK",
+        "live": ""
+    },
+    {
+        "name": "Snakeskin",
+        "description": "",
+        "tags": [
+            "Python"
+        ],
+        "github": "https://github.com/CodeMaverick-143/Snakeskin",
+        "live": ""
+    },
+    {
+        "name": "Insight",
+        "description": "",
+        "tags": [
+            "Python"
+        ],
+        "github": "https://github.com/CodeMaverick-143/Insight",
+        "live": ""
+    },
+    {
+        "name": "Les-Go",
+        "description": "",
+        "tags": [
+            "Go"
+        ],
+        "github": "https://github.com/CodeMaverick-143/Les-Go",
+        "live": ""
+    },
+    {
+        "name": "Lockedin",
+        "description": "",
+        "tags": [
+            "Shell"
+        ],
+        "github": "https://github.com/CodeMaverick-143/Lockedin",
+        "live": "https://lockedin.xplnhub.tech"
+    },
+    {
+        "name": "NST-Events",
+        "description": "",
+        "tags": [
+            "React Native"
+        ],
+        "github": "https://github.com/CodeMaverick-143/NST-Events",
+        "live": ""
+    },
+    {
+        "name": "Anonymous_QAP",
+        "description": "",
+        "tags": [
+            "Reactjs",
+            "Express",
+            "SQL"
+        ],
+        "github": "https://github.com/CodeMaverick-143/Anonymous_QAP",
+        "live": ""
+    },
+    {
+        "name": "IdeaToIPO",
+        "description": "",
+        "tags": [
+            "Go",
+            "NextJs"
+        ],
+        "github": "https://github.com/CodeMaverick-143/IdeaToIPO",
+        "live": ""
+    },
+    {
+        "name": "SkillFest",
+        "description": "",
+        "tags": [
+            "Reactjs",
+            "Go"
+        ],
+        "github": "https://github.com/CodeMaverick-143/SkillFest",
+        "live": ""
+    },
+    {
+        "name": "Intership Portal",
+        "description": "",
+        "tags": [
+            "Reactjs",
+            "Express",
+            "Mongo"
+        ],
+        "github": "https://github.com/CodeMaverick-143/Intership-Portal",
+        "live": ""
+    }
+]

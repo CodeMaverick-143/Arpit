@@ -9,6 +9,8 @@ import CommandPalette from "./components/CommandPalette";
 import CustomCursor from "./components/CustomCursor";
 import DeveloperMode from "./components/DeveloperMode";
 
+export const runtime = "edge";
+
 const sora = Sora({
   variable: "--font-sora",
   subsets: ["latin"],

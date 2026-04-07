@@ -19,9 +19,10 @@ export interface SocialLink {
 
 export const socialLinks: SocialLink[] = [
   { label: 'GitHub', href: 'https://github.com/CodeMaverick-143', icon: 'github' },
-  { label: 'LinkedIn', href: 'https://linkedin.com', icon: 'linkedin' },
-  { label: 'Twitter / X', href: 'https://x.com', icon: 'twitter' },
-  { label: 'Email', href: 'mailto:hello@example.com', icon: 'email' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/arpitsarang', icon: 'linkedin' },
+  { label: 'Twitter / X', href: 'https://x.com/CodeMaverick143', icon: 'twitter' },
+  { label: 'Kaggle', href: 'https://www.kaggle.com/codemaverick143', icon: 'kaggle' },
+  { label: 'Email', href: 'mailto:arpit.01.sarang.2005@gmail.com', icon: 'email' },
 ];
 
 export interface CommandItem {
@@ -40,8 +41,9 @@ export const commandItems: CommandItem[] = [
   { id: 'blog', label: 'Blog', href: '/blog', section: 'Pages', keywords: ['articles', 'writing'] },
   { id: 'contact', label: 'Contact', href: '/contact', section: 'Pages', keywords: ['email', 'hire', 'connect'] },
   { id: 'github', label: 'GitHub', href: 'https://github.com/CodeMaverick-143', section: 'Social', keywords: ['code', 'repos'] },
-  { id: 'linkedin', label: 'LinkedIn', href: 'https://linkedin.com', section: 'Social', keywords: ['professional'] },
-  { id: 'twitter', label: 'Twitter / X', href: 'https://x.com', section: 'Social', keywords: ['tweets'] },
+  { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/in/arpitsarang', section: 'Social', keywords: ['professional'] },
+  { id: 'twitter', label: 'Twitter / X', href: 'https://x.com/CodeMaverick143', section: 'Social', keywords: ['tweets'] },
+  { id: 'kaggle', label: 'Kaggle', href: 'https://www.kaggle.com/codemaverick143', section: 'Social', keywords: ['data', 'ml', 'ai'] },
   { id: 'resume', label: 'Download Resume', href: '/resume.pdf', section: 'Actions', keywords: ['cv', 'pdf', 'hire', 'bio'] },
 ];
 
@@ -54,3 +56,4 @@ export const siteConfig = {
   email: 'arpit.01.sarang.2005@gmail.com',
   resume: '/resume.pdf',
 };
+

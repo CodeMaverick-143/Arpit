@@ -1,0 +1,86 @@
+[
+    {
+        "slug": "Why I Built a Node.js Framework That Actually Handles Real-World Data",
+        "title": "Why I Built a Node.js Framework That Actually Handles Real-World Data",
+        "excerpt": "The problem with modern backend frameworks isn’t what they do. It’s what they pretend doesn’t exist.",
+        "date": "2026-04-01",
+        "readTime": "5 min read",
+        "tags": [
+            "nodejs",
+            "web",
+            "framework"
+        ],
+        "featured": true,
+        "link": "https://medium.com/@codemaverick-143/why-i-built-a-node-js-framework-that-actually-handles-real-world-data-899cd1a20d46"
+    },
+    {
+        "slug": "I Built a Frontend Framework in Python and It’s Actually Fire",
+        "title": "I Built a Frontend Framework in Python and It’s Actually Fire",
+        "excerpt": "I’ve always been fascinated by how frontend frameworks like React, Vue, and Svelte work under the hood. So I decided to build my own frontend framework in Python.",
+        "date": "2025-12-01",
+        "readTime": "5 min read",
+        "tags": [
+            "python",
+            "web",
+            "framework"
+        ],
+        "featured": true,
+        "link": "https://medium.com/@codemaverick-143/i-built-a-frontend-framework-in-python-and-its-actually-fire-0c39f0490f9d"
+    },
+    {
+        "slug": "I’m Launching My Own Open-Source Org — XplnHub",
+        "title": "I’m Launching My Own Open-Source Org — XplnHub",
+        "excerpt": "I’m excited to announce the launch of my very own open-source organization — XplnHub! This has been a dream of mine for a long time, and I’m thrilled to finally be able to share it with the world.",
+        "date": "2025-10-25",
+        "readTime": "2 min read",
+        "tags": [
+            "Open Source",
+            "BUilding",
+            "Contibution"
+        ],
+        "featured": true,
+        "link": "https://medium.com/@codemaverick-143/im-launching-my-own-open-source-org-xplnhub-217901f85d3f"
+    },
+    {
+        "slug": "FinMate — A Student-First Personal Finance Tracker",
+        "title": "FinMate — A Student-First Personal Finance Tracker",
+        "excerpt": "Managing money as a student is hard — monthly budgets disappear in days, impulse spending goes unchecked, and most personal finance apps feel like they are made for investment bankers",
+        "date": "2026-04-01",
+        "readTime": "2 min read",
+        "tags": [
+            "Fintech",
+            "supabase",
+            "nextjs"
+        ],
+        "featured": true,
+        "link": "https://medium.com/@codemaverick-143/finmate-a-student-first-personal-finance-tracker-d05f8660d697"
+    },
+    {
+        "slug": "My First Year at Newton School of Technology — A Journey of Code, Community & Growth",
+        "title": "My First Year at Newton School of Technology — A Journey of Code, Community & Growth",
+        "excerpt": "My first year at Newton School of Technology was a whirlwind of learning, growth, and unforgettable experiences. From late-night coding sessions to hackathons and competitions, every moment pushed me to become a better engineer and person.",
+        "date": "2025-06-11",
+        "readTime": "3 min read",
+        "tags": [
+            "personal",
+            "nst",
+            "college"
+        ],
+        "featured": false,
+        "link": "https://medium.com/@codemaverick-143/my-first-year-at-newton-school-of-technology-a-journey-of-code-community-growth-b90eb85d115d"
+    },
+    {
+        "slug": "1st Semester in Newton School of Technology",
+        "title": "1st Semester in Newton School of Technology",
+        "excerpt": "My first semester at Newton School of Technology was a whirlwind of learning, growth, and unforgettable experiences. From late-night coding sessions to hackathons and competitions, every moment pushed me to become a better engineer and person.",
+        "date": "2025-02-24",
+        "readTime": "2 min read",
+        "tags": [
+            "personal",
+            "nst",
+            "COllege"
+        ],
+        "featured": false,
+        "link": "https://medium.com/@codemaverick-143/1st-semester-in-newton-school-of-technology-561ded43360a"
+    }
+]

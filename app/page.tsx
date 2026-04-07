@@ -15,6 +15,8 @@ import { ArrowRightIcon, LayoutIcon, ServerIcon, SmartphoneIcon, CpuIcon, GitHub
 import { projects } from '@/data/projects';
 import { techStack } from '@/data/skills';
 import { siteConfig } from '@/data/navigation';
+import { blogPosts } from '@/data/blog';
+import { formatDate } from '@/lib/utils';
 
 const terminalLines = [
   { type: 'command' as const, text: 'whoami', delay: 500 },
@@ -32,6 +34,9 @@ const terminalLines = [
 
 export default function Home() {
   const featuredProjects = projects.filter((p) => p.featured);
+  const latestBlogs = blogPosts.slice(0, 3);
+
+
 
   return (
     <div className="noise">
@@ -262,7 +267,59 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ═══ LATEST BLOG POSTS ═══ */}
+      <section className="section" style={{ borderTop: '1px solid var(--border)' }}>
+        <div className="container-wide">
+          <SectionHeading
+            label="Writing"
+            title="Latest Blog Posts"
+            description="Deep dives into AI, engineering philosophy, and the future of coding."
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {latestBlogs.map((post, i) => (
+              <ScrollReveal key={post.slug} delay={i * 0.1}>
+                <Link href={post.link} target="_blank" rel="noopener noreferrer">
+
+                  <div
+                    className="group flex flex-col h-full p-6 rounded-xl transition-all duration-300 hover:border-[var(--text-muted)]"
+                    style={{
+                      background: 'var(--surface-1)',
+                      border: '1px solid var(--border)',
+                    }}
+                  >
+                    <div className="brand-mono text-[10px] font-bold uppercase tracking-wider mb-4" style={{ color: 'var(--text-muted)' }}>
+                      {formatDate(post.date)} · {post.readTime}
+                    </div>
+                    <h3
+                      className="text-xl font-bold tracking-tight mb-4 group-hover:text-gradient transition-all"
+                      style={{ color: 'var(--text-primary)' }}
+                    >
+                      {post.title}
+                    </h3>
+                    <p className="text-[14px] text-body line-clamp-2 opacity-70 mb-8 flex-1">
+                      {post.excerpt}
+                    </p>
+                    <div className="flex items-center gap-2 brand-mono text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>
+                      Read Post <ArrowRightIcon size={12} className="transition-transform group-hover:translate-x-1" />
+                    </div>
+                  </div>
+                </Link>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          <ScrollReveal delay={0.3} className="mt-12 text-center">
+            <Link href="/blog" className="btn-secondary inline-flex items-center gap-2">
+              View All Blog Posts
+              <ArrowRightIcon size={14} />
+            </Link>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* ═══ CTA SECTION ═══ */}
+
       <section className="section" style={{ borderTop: '1px solid var(--border)' }}>
         <div className="container-tight text-center">
           <ScrollReveal>

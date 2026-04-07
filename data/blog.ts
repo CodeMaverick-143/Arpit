@@ -1,3 +1,5 @@
+import blogData from '../blog.json';
+
 export interface BlogPost {
   slug: string;
   title: string;
@@ -6,9 +8,9 @@ export interface BlogPost {
   readTime: string;
   tags: string[];
   featured: boolean;
-  content: string;
+  link: string;
 }
 
-export const blogPosts: BlogPost[] = [
-  // Mock data removed. Add your first post here!
-];
+
+export const blogPosts: BlogPost[] = blogData as BlogPost[];
+

@@ -11,6 +11,8 @@ export default function BlogPage() {
   const featured = blogPosts.find((p) => p.featured);
   const others = blogPosts.filter((p) => !p.featured);
 
+
+
   return (
     <div className="noise">
       <section className="section">
@@ -24,7 +26,7 @@ export default function BlogPage() {
           {/* Featured Post */}
           {featured && (
             <ScrollReveal className="mb-12">
-              <Link href={`/blog/${featured.slug}`}>
+              <Link href={featured.link} target="_blank" rel="noopener noreferrer">
                 <div
                   className="group p-8 md:p-12 rounded-xl transition-all duration-300 hover:border-[var(--text-muted)]"
                   style={{
@@ -66,7 +68,7 @@ export default function BlogPage() {
           <div className="space-y-4">
             {others.map((post, i) => (
               <ScrollReveal key={post.slug} delay={i * 0.05}>
-                <Link href={`/blog/${post.slug}`}>
+                <Link href={post.link} target="_blank" rel="noopener noreferrer">
                   <div
                     className="group flex flex-col md:flex-row md:items-center gap-4 md:gap-12 p-8 rounded-xl transition-all duration-300 hover:border-[var(--text-muted)]"
                     style={{

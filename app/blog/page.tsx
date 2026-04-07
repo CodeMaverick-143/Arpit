@@ -8,8 +8,9 @@ import { blogPosts } from '@/data/blog';
 import { formatDate } from '@/lib/utils';
 
 export default function BlogPage() {
-  const featured = blogPosts.find((p) => p.featured);
-  const others = blogPosts.filter((p) => !p.featured);
+  const featured = blogPosts.find((p) => p.featured) || blogPosts[0];
+  const others = blogPosts.filter((p) => p.slug !== featured?.slug);
+
 
 
 

@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useRouter } from 'next/navigation';
-import { commandItems } from '@/data/navigation';
+import { useState, useEffect, useRef, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { commandItems } from "@/data/navigation";
 
 export default function CommandPalette() {
   const [isOpen, setIsOpen] = useState(false);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -15,70 +15,77 @@ export default function CommandPalette() {
   const filtered = commandItems.filter(
     (item) =>
       item.label.toLowerCase().includes(query.toLowerCase()) ||
-      item.keywords.some((k) => k.toLowerCase().includes(query.toLowerCase()))
+      item.keywords.some((k) => k.toLowerCase().includes(query.toLowerCase())),
   );
 
-  const grouped = filtered.reduce<Record<string, typeof commandItems>>((acc, item) => {
-    if (!acc[item.section]) acc[item.section] = [];
-    acc[item.section].push(item);
-    return acc;
-  }, {});
+  const grouped = filtered.reduce<Record<string, typeof commandItems>>(
+    (acc, item) => {
+      if (!acc[item.section]) acc[item.section] = [];
+      acc[item.section].push(item);
+      return acc;
+    },
+    {},
+  );
 
   const flatFiltered = Object.values(grouped).flat();
 
   const handleSelect = useCallback(
     (item: (typeof commandItems)[0]) => {
       setIsOpen(false);
-      setQuery('');
-      if (item.href.startsWith('http') || item.href.endsWith('.pdf')) {
-        window.open(item.href, '_blank');
+      setQuery("");
+      if (item.href.startsWith("http") || item.href.endsWith(".pdf")) {
+        window.open(item.href, "_blank");
       } else {
         router.push(item.href);
       }
     },
-    [router]
+    [router],
   );
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
-        setIsOpen((prev) => !prev);
+        if (isOpen) {
+          setIsOpen(false);
+        } else {
+          setSelectedIndex(0);
+          setQuery("");
+          setIsOpen(true);
+        }
       }
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         setIsOpen(false);
       }
     };
 
-    const handleCustomOpen = () => setIsOpen(true);
-    window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('open-command-palette', handleCustomOpen);
+    const handleCustomOpen = () => {
+      setSelectedIndex(0);
+      setQuery("");
+      setIsOpen(true);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("open-command-palette", handleCustomOpen);
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('open-command-palette', handleCustomOpen);
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("open-command-palette", handleCustomOpen);
     };
   }, []);
 
   useEffect(() => {
     if (isOpen) {
       inputRef.current?.focus();
-      setSelectedIndex(0);
-      setQuery('');
     }
   }, [isOpen]);
 
-  useEffect(() => {
-    setSelectedIndex(0);
-  }, [query]);
-
   const handleKeyNavigation = (e: React.KeyboardEvent) => {
-    if (e.key === 'ArrowDown') {
+    if (e.key === "ArrowDown") {
       e.preventDefault();
       setSelectedIndex((prev) => Math.min(prev + 1, flatFiltered.length - 1));
-    } else if (e.key === 'ArrowUp') {
+    } else if (e.key === "ArrowUp") {
       e.preventDefault();
       setSelectedIndex((prev) => Math.max(prev - 1, 0));
-    } else if (e.key === 'Enter' && flatFiltered[selectedIndex]) {
+    } else if (e.key === "Enter" && flatFiltered[selectedIndex]) {
       handleSelect(flatFiltered[selectedIndex]);
     }
   };
@@ -105,17 +112,17 @@ export default function CommandPalette() {
             transition={{ duration: 0.15 }}
             className="relative w-full max-w-lg overflow-hidden"
             style={{
-              background: 'var(--surface-1)',
-              border: '1px solid var(--border)',
-              borderRadius: 'var(--radius-xl)',
-              boxShadow: 'var(--shadow-xl)',
+              background: "var(--surface-1)",
+              border: "1px solid var(--border)",
+              borderRadius: "var(--radius-xl)",
+              boxShadow: "var(--shadow-xl)",
             }}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Search Input */}
             <div
               className="flex items-center gap-3 px-4"
-              style={{ borderBottom: '1px solid var(--border)' }}
+              style={{ borderBottom: "1px solid var(--border)" }}
             >
               <svg
                 width="16"
@@ -126,7 +133,7 @@ export default function CommandPalette() {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                style={{ color: 'var(--text-tertiary)', flexShrink: 0 }}
+                style={{ color: "var(--text-tertiary)", flexShrink: 0 }}
               >
                 <circle cx="11" cy="11" r="8" />
                 <path d="m21 21-4.3-4.3" />
@@ -136,17 +143,20 @@ export default function CommandPalette() {
                 type="text"
                 placeholder="Type a command or search…"
                 value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  setSelectedIndex(0);
+                }}
                 onKeyDown={handleKeyNavigation}
                 className="w-full py-4 bg-transparent text-sm outline-none placeholder:text-[var(--text-muted)]"
-                style={{ color: 'var(--text-primary)' }}
+                style={{ color: "var(--text-primary)" }}
               />
               <kbd
                 className="font-code text-[10px] px-1.5 py-0.5 rounded"
                 style={{
-                  color: 'var(--text-muted)',
-                  background: 'var(--surface-2)',
-                  border: '1px solid var(--border)',
+                  color: "var(--text-muted)",
+                  background: "var(--surface-2)",
+                  border: "1px solid var(--border)",
                 }}
               >
                 ESC
@@ -159,7 +169,7 @@ export default function CommandPalette() {
                 <div key={section}>
                   <div
                     className="px-4 py-2 text-[10px] font-semibold uppercase tracking-widest"
-                    style={{ color: 'var(--text-muted)' }}
+                    style={{ color: "var(--text-muted)" }}
                   >
                     {section}
                   </div>
@@ -173,17 +183,17 @@ export default function CommandPalette() {
                         style={{
                           color:
                             globalIndex === selectedIndex
-                              ? 'var(--text-primary)'
-                              : 'var(--text-secondary)',
+                              ? "var(--text-primary)"
+                              : "var(--text-secondary)",
                           background:
                             globalIndex === selectedIndex
-                              ? 'var(--surface-2)'
-                              : 'transparent',
+                              ? "var(--surface-2)"
+                              : "transparent",
                         }}
                         onMouseEnter={() => setSelectedIndex(globalIndex)}
                       >
                         <span className="font-medium">{item.label}</span>
-                        {item.href.startsWith('http') && (
+                        {item.href.startsWith("http") && (
                           <svg
                             width="12"
                             height="12"
@@ -191,7 +201,10 @@ export default function CommandPalette() {
                             fill="none"
                             stroke="currentColor"
                             strokeWidth="2"
-                            style={{ color: 'var(--text-muted)', marginLeft: 'auto' }}
+                            style={{
+                              color: "var(--text-muted)",
+                              marginLeft: "auto",
+                            }}
                           >
                             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
                             <polyline points="15 3 21 3 21 9" />
@@ -204,7 +217,10 @@ export default function CommandPalette() {
                 </div>
               ))}
               {flatFiltered.length === 0 && (
-                <div className="px-4 py-8 text-center text-sm" style={{ color: 'var(--text-muted)' }}>
+                <div
+                  className="px-4 py-8 text-center text-sm"
+                  style={{ color: "var(--text-muted)" }}
+                >
                   No results found
                 </div>
               )}

@@ -1,9 +1,10 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import type { Project } from '@/data/projects';
-import { useInView } from '@/hooks/useInView';
+import Image from "next/image";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import type { Project } from "@/data/projects";
+import { useInView } from "@/hooks/useInView";
 
 interface ProjectCardProps {
   project: Project;
@@ -11,7 +12,11 @@ interface ProjectCardProps {
   featured?: boolean;
 }
 
-export default function ProjectCard({ project, index, featured = false }: ProjectCardProps) {
+export default function ProjectCard({
+  project,
+  index,
+  featured = false,
+}: ProjectCardProps) {
   const [ref, isInView] = useInView<HTMLDivElement>({ threshold: 0.1 });
 
   return (
@@ -19,51 +24,81 @@ export default function ProjectCard({ project, index, featured = false }: Projec
       ref={ref}
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className={featured ? 'md:col-span-2' : ''}
+      transition={{
+        duration: 0.6,
+        delay: index * 0.1,
+        ease: [0.25, 0.46, 0.45, 0.94],
+      }}
+      className={featured ? "md:col-span-2" : ""}
     >
       <Link href={`/projects/${project.slug}`}>
         <div
           className="group relative overflow-hidden cursor-pointer transition-all duration-500"
           style={{
-            background: 'var(--surface-1)',
-            border: '1px solid var(--border)',
-            borderRadius: 'var(--radius-lg)',
+            background: "var(--surface-1)",
+            border: "1px solid var(--border)",
+            borderRadius: "var(--radius-lg)",
           }}
         >
           {/* Project Image Area */}
           <div
             className="relative overflow-hidden"
             style={{
-              height: featured ? '280px' : '200px',
-              background: 'var(--surface-2)',
+              height: featured ? "320px" : "240px",
+              background: "var(--surface-2)",
             }}
           >
-            {/* Abstract Pattern */}
+            {/* Background Texture */}
             <div className="absolute inset-0 grid-pattern opacity-30" />
-            <div className="absolute inset-0 flex items-center justify-center transition-transform duration-700 group-hover:scale-105">
-              <div className="text-center px-6">
-                <span
-                  className="brand-mono text-[10px] uppercase tracking-[0.4em] block mb-3"
-                  style={{ color: 'var(--text-tertiary)' }}
-                >
-                  {project.category[0]}
-                </span>
-                <h3
-                  className="heading-display text-3xl md:text-4xl"
-                  style={{ color: 'var(--text-primary)' }}
-                >
-                  {project.title}
-                </h3>
+            <div className="absolute inset-0 bg-gradient-to-br from-transparent to-[var(--background)]/40" />
+
+            {project.image ? (
+              <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                sizes={
+                  featured
+                    ? "(max-width: 1200px) 100vw, 800px"
+                    : "(max-width: 1200px) 50vw, 400px"
+                }
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center transition-transform duration-700 group-hover:scale-105">
+                <div className="text-center px-6">
+                  <span
+                    className="brand-mono text-[10px] uppercase tracking-[0.4em] block mb-3 opacity-60"
+                    style={{ color: "var(--text-tertiary)" }}
+                  >
+                    {project.category[0]}
+                  </span>
+                  <h3
+                    className="heading-display text-4xl md:text-5xl"
+                    style={{ color: "var(--text-primary)" }}
+                  >
+                    {project.title}
+                  </h3>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Hover Overlay */}
             <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center p-6"
-              style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)' }}
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center p-6 z-10"
+              style={{
+                background: "rgba(0,0,0,0.6)",
+                backdropFilter: "blur(12px)",
+              }}
             >
-              <span className="btn-primary text-xs font-bold uppercase tracking-wider px-6 py-3">View Case Study</span>
+              <div className="text-center">
+                <span className="btn-primary text-xs font-bold uppercase tracking-wider px-6 py-3 mb-4 inline-block">
+                  View Case Study
+                </span>
+                <p className="text-[11px] font-medium tracking-wide text-white/60">
+                  {project.role} · {project.year}
+                </p>
+              </div>
             </div>
 
             {/* Year Badge */}
@@ -75,13 +110,13 @@ export default function ProjectCard({ project, index, featured = false }: Projec
               <div className="flex-1">
                 <h3
                   className="text-lg font-bold tracking-tight group-hover:text-[var(--text-primary)] transition-colors leading-tight"
-                  style={{ color: 'var(--text-primary)' }}
+                  style={{ color: "var(--text-primary)" }}
                 >
                   {project.title}
                 </h3>
                 <p
                   className="brand-mono text-[10px] uppercase tracking-wider mt-2"
-                  style={{ color: 'var(--text-tertiary)' }}
+                  style={{ color: "var(--text-tertiary)" }}
                 >
                   {project.role}
                 </p>
@@ -89,7 +124,7 @@ export default function ProjectCard({ project, index, featured = false }: Projec
               <motion.div
                 className="flex-shrink-0 mt-1"
                 whileHover={{ x: 4, y: -4 }}
-                transition={{ type: 'spring', stiffness: 300 }}
+                transition={{ type: "spring", stiffness: 300 }}
               >
                 <svg
                   width="18"
@@ -99,7 +134,7 @@ export default function ProjectCard({ project, index, featured = false }: Projec
                   stroke="currentColor"
                   strokeWidth="2.5"
                   className="transition-colors"
-                  style={{ color: 'var(--text-muted)' }}
+                  style={{ color: "var(--text-muted)" }}
                 >
                   <path d="M7 17l9.2-9.2M17 17V7H7" />
                 </svg>
@@ -117,9 +152,9 @@ export default function ProjectCard({ project, index, featured = false }: Projec
                   key={tech}
                   className="brand-mono text-[9px] uppercase tracking-wider px-2.5 py-1 rounded-sm"
                   style={{
-                    color: 'var(--text-secondary)',
-                    background: 'var(--surface-2)',
-                    border: '1px solid var(--border)',
+                    color: "var(--text-secondary)",
+                    background: "var(--surface-2)",
+                    border: "1px solid var(--border)",
                   }}
                 >
                   {tech}
@@ -129,9 +164,9 @@ export default function ProjectCard({ project, index, featured = false }: Projec
                 <span
                   className="brand-mono text-[9px] uppercase tracking-wider px-2.5 py-1 rounded-sm opacity-60"
                   style={{
-                    color: 'var(--text-tertiary)',
-                    background: 'var(--surface-2)',
-                    border: '1px solid var(--border)',
+                    color: "var(--text-tertiary)",
+                    background: "var(--surface-2)",
+                    border: "1px solid var(--border)",
                   }}
                 >
                   +{project.tech.length - 4}

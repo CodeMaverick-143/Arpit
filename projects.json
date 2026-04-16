@@ -1,7 +1,7 @@
 [
     {
         "name": "OverClock",
-        "description": "",
+        "description": "A high-performance project management and evaluation system designed for hackathons, classrooms, and corporate training. It facilitates a competitive yet collaborative environment where teams select problem statements on a first-come-first-serve (FCFS) basis, submit progress via GitHub/PPT, and compete on a multi-tier leaderboard.",
         "tags": [
             "Reactjs",
             "SQL",
@@ -13,51 +13,51 @@
     },
     {
         "name": "Exam_Analytics_System",
-        "description": "",
+        "description": "Exam Analytics Pro is a high-performance system designed to predict and analyze the difficulty of assessment items using a hybrid approach of Traditional Machine Learning and Agentic AI (LangGraph/LangChain).",
         "tags": [
             "Python",
             "Streamlit",
             "LangGraph"
         ],
-        "github": "https://github.com/CodeMaverick-143/Exam_Analytics_System",
-        "live": ""
+        "github": "https://github.com/praggCode/Exam-Analytics-System",
+        "live": "https://team-prag-aiml-project.streamlit.app"
     },
     {
         "name": "Quick_Snatch_Platform",
-        "description": "",
+        "description": "A secure, scalable, terminal-based CTF event platform built with Go. Teams register, solve challenges, unlock levels, and compete on a live leaderboard.",
         "tags": [
             "Reactjs",
             "SQL",
             "Go"
         ],
         "github": "https://github.com/CodeMaverick-143/Quick_Snatch_Platform",
-        "live": ""
+        "live": "https://quick-snatch-platform.vercel.app"
     },
     {
         "name": "Maverick Cli",
-        "description": "",
+        "description": "An intelligent CLI tool powered by AI, featuring a full-stack architecture with a Next.js frontend and an Express/Prisma backend.",
         "tags": [
             "NextJs",
             "SQL",
             "Express"
         ],
         "github": "https://github.com/CodeMaverick-143/Maverick-Cli",
-        "live": ""
+        "live": "https://maverick-cli.vercel.app"
     },
     {
         "name": "Tekron-Apk",
-        "description": "",
+        "description": "Tekron App is an event management and check-in system designed to eliminate the chaos typically seen during college fests. The application streamlines participant entry, delivers real-time updates, and provides precise event location assignments immediately after check-in",
         "tags": [
             "React Native",
             "Express",
             "Mongo"
         ],
-        "github": "https://github.com/CodeMaverick-143/Tekron-Apk",
-        "live": ""
+        "github": "https://github.com/nst-sdc/tekron-2.0-APK",
+        "live": "https://webapp.tekronfest.com"
     },
     {
         "name": "Recoil",
-        "description": "",
+        "description": "Recoil is a modern, tactical-themed system utility built with Tauri v2 and React. It allows you to instantly identify and terminate processes occupying specific network ports",
         "tags": [
             "Tauri",
             "Reactjs",
@@ -68,7 +68,7 @@
     },
     {
         "name": "FR",
-        "description": "",
+        "description": "FR is a high-performance, cross-platform developer utility suite built with Rust and Tauri. It combines a lightning-fast CLI with a beautiful \"Terminal-First\" GUI, allowing you to manage your projects, deployments, and resources with modern energy.",
         "tags": [
             "Reactjs",
             "Rust",
@@ -79,148 +79,132 @@
     },
     {
         "name": "CodeNarrator",
-        "description": "",
+        "description": "CodeNarrator aims to bridge the gap between complex code and developer understanding. Whether you're a beginner exploring a new open-source repo, a maintainer reviewing a PR, or an engineer returning to your own old code — CodeNarrator helps you understand any codebase faster and with less effort.",
         "tags": [
             "Javascript"
         ],
-        "github": "https://github.com/CodeMaverick-143/CodeNarrator",
-        "live": ""
+        "github": "https://github.com/XplnHUB/CodeNarrator",
+        "live": "https://www.npmjs.com/package/@codemaverick-143/codenarrator"
     },
     {
         "name": "Slate-APK",
-        "description": "",
+        "description": "A modern, gesture-driven task management application built with React Native and Expo.",
         "tags": [
             "React Native",
             "Mongo"
         ],
-        "github": "https://github.com/CodeMaverick-143/Slate-APK",
+        "github": "https://github.com/CodeMaverick-143/Slate-Apk",
         "live": ""
     },
     {
         "name": "Newgate",
-        "description": "",
+        "description": "Newgate is a modern Node.js backend framework designed for developers who want to handle multiple data formats effortlessly. It combines the simplicity of Express-style routing with automatic parsing for JSON, CSV, XML, YAML, form-data, and binary data.",
         "tags": [
             "Javascript",
             "NPM"
         ],
         "github": "https://github.com/CodeMaverick-143/Newgate",
-        "live": ""
+        "live": "https://newgate.xplnhub.tech"
     },
     {
         "name": "Sketchy",
-        "description": "",
+        "description": "A collaborative whiteboard with chat feature",
         "tags": [
             "NextJs",
             "Express",
             "SQL"
         ],
         "github": "https://github.com/CodeMaverick-143/Sketchy",
-        "live": ""
+        "live": "https://github.com/CodeMaverick-143/Sketchy/blob/main/scene1.png"
     },
     {
         "name": "Instagram_Analytics",
-        "description": "",
+        "description": "This project analyzes a dataset of 30,000 Instagram posts collected over the last 12 months. The dataset contains detailed engagement metrics including likes, comments, shares, saves, reach, impressions, hashtags used, caption length, followers gained, and content type. The goal of this project is to study posting behavior, identify high-performing patterns, and build machine learning models to predict engagement and classify content performance.",
         "tags": [
             "Python"
         ],
         "github": "https://github.com/CodeMaverick-143/Instagram_Analytics",
-        "live": ""
+        "live": "https://github.com/CodeMaverick-143/Instagram_Analytics/blob/main/Instagram_Analytics.ipynb"
     },
     {
         "name": "Git_Stat_APK",
-        "description": "",
+        "description": "A comprehensive cross-platform mobile application built with React Native and Expo that provides detailed GitHub analytics and user insights. This app enables users to explore GitHub profiles, repository statistics, contribution metrics, and pull request data by simply entering a GitHub username.",
         "tags": [
             "React Native",
-            "Javascript"
+            "Javascript",
+            "Expo"
         ],
         "github": "https://github.com/CodeMaverick-143/Git_Stat_APK",
-        "live": ""
+        "live": "https://expo.dev/accounts/arpit_code_titan/projects/github-stats"
     },
     {
         "name": "Snakeskin",
-        "description": "",
+        "description": "Snakeskin is a modern, lightweight frontend framework/library designed to make building component-based web applications fast, flexible, and enjoyable. It integrates seamlessly with Tailwind CSS and Bootstrap, and provides a CLI tool to scaffold, run, and build projects effortlessly.",
         "tags": [
             "Python"
         ],
         "github": "https://github.com/CodeMaverick-143/Snakeskin",
-        "live": ""
+        "live": "https://snakeskin.xplnhub.tech"
     },
     {
         "name": "Insight",
-        "description": "",
+        "description": "Insight is a Python-based CLI tool that analyzes codebases and generates detailed reports. It provides both static analysis and AI-powered explanations (via Gemini API or local models).",
         "tags": [
             "Python"
         ],
-        "github": "https://github.com/CodeMaverick-143/Insight",
-        "live": ""
+        "github": "https://github.com/XplnHUB/Insight-Py",
+        "live": "https://pypi.org/project/insight-cli-sarang"
     },
     {
         "name": "Les-Go",
-        "description": "",
+        "description": "Les’Go is a secure, terminal-based messaging system built in Go that provides authenticated, end-to-end encrypted communication between users, with real-time delivery, unread tracking, and encrypted message persistence",
         "tags": [
             "Go"
         ],
-        "github": "https://github.com/CodeMaverick-143/Les-Go",
+        "github": "https://github.com/XplnHUB/Les-Go",
         "live": ""
     },
     {
         "name": "Lockedin",
-        "description": "",
+        "description": "LockedIn is a modular, Bash-based productivity management tool designed for terminal users. It provides a robust framework for managing tasks and projects through a Command Line Interface (CLI) using local JSON data persistence.",
         "tags": [
             "Shell"
         ],
-        "github": "https://github.com/CodeMaverick-143/Lockedin",
+        "github": "https://github.com/XplnHUB/lockedin",
         "live": "https://lockedin.xplnhub.tech"
     },
     {
-        "name": "NST-Events",
-        "description": "",
-        "tags": [
-            "React Native"
-        ],
-        "github": "https://github.com/CodeMaverick-143/NST-Events",
-        "live": ""
-    },
-    {
-        "name": "Anonymous_QAP",
-        "description": "",
+        "name": "Annoymeet",
+        "description": "The Anonymous Question Asking Platform is a real-time, web-based application that facilitates anonymous interactions between students and teachers.",
         "tags": [
             "Reactjs",
             "Express",
             "SQL"
         ],
-        "github": "https://github.com/CodeMaverick-143/Anonymous_QAP",
-        "live": ""
-    },
-    {
-        "name": "IdeaToIPO",
-        "description": "",
-        "tags": [
-            "Go",
-            "NextJs"
-        ],
-        "github": "https://github.com/CodeMaverick-143/IdeaToIPO",
-        "live": ""
+        "github": "https://github.com/nst-sdc/Anonymous_Question_Asking-Platform",
+        "live": "https://annoymeet.vercel.app"
     },
     {
         "name": "SkillFest",
-        "description": "",
+        "description": "SkillFest is a premium, high-octane developer event platform designed for open-source communities. Built with modern engineering at its core, it automates pull request tracking, validates developer skills with real-world code analysis, and gamifies the contribution experience through a live, responsive leaderboard.",
         "tags": [
             "Reactjs",
-            "Go"
+            "Go",
+            "Astro"
         ],
-        "github": "https://github.com/CodeMaverick-143/SkillFest",
-        "live": ""
+        "github": "https://github.com/CodeMaverick-143/skillfest-platform",
+        "live": "https://skillfest.nstsdc.org"
     },
     {
         "name": "Intership Portal",
-        "description": "",
+        "description": "The Internship Intelligence Portal is a web platform designed to help students prepare for internships and placements using real interview data, company assignments, and structured preparation material.",
         "tags": [
             "Reactjs",
             "Express",
-            "Mongo"
+            "Mongo",
+            "Astro"
         ],
-        "github": "https://github.com/CodeMaverick-143/Intership-Portal",
-        "live": ""
+        "github": "https://github.com/CodeMaverick-143/internship",
+        "live": "https://kaizen.nstsdc.org"
     }
 ]

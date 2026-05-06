@@ -8,9 +8,13 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   /* Modern Typography Pairing (Sora + Plus Jakarta Sans) */
-  --font-sans: var(--font-plus-jakarta), var(--font-sora), system-ui, -apple-system, sans-serif;
+  --font-sans:
+    var(--font-plus-jakarta), var(--font-sora), system-ui, -apple-system,
+    sans-serif;
   --font-display: var(--font-sora), system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-jetbrains), 'JetBrains Mono', 'IBM Plex Mono', 'Fira Code', monospace;
+  --font-mono:
+    var(--font-jetbrains), "JetBrains Mono", "IBM Plex Mono", "Fira Code",
+    monospace;
 }
 
 /* ── Color Tokens ── */
@@ -103,7 +107,12 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-plus-jakarta), var(--font-sora), system-ui, -apple-system, sans-serif;
+  font-family:
+    var(--font-plus-jakarta),
+    var(--font-sora),
+    system-ui,
+    -apple-system,
+    sans-serif;
   line-height: 1.6;
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
@@ -137,7 +146,9 @@ body {
 }
 
 .font-code {
-  font-family: var(--font-jetbrains), 'JetBrains Mono', 'IBM Plex Mono', 'Fira Code', monospace;
+  font-family:
+    var(--font-jetbrains), "JetBrains Mono", "IBM Plex Mono", "Fira Code",
+    monospace;
   letter-spacing: -0.01em;
 }
 
@@ -278,13 +289,19 @@ body {
   border-radius: 50%;
 }
 
-.terminal-dot.red { background: #ff5f57; }
-.terminal-dot.yellow { background: #febc2e; }
-.terminal-dot.green { background: #28c840; }
+.terminal-dot.red {
+  background: #ff5f57;
+}
+.terminal-dot.yellow {
+  background: #febc2e;
+}
+.terminal-dot.green {
+  background: #28c840;
+}
 
 .terminal-body {
   padding: 24px;
-  font-family: var(--font-jetbrains), 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains), "JetBrains Mono", monospace;
   font-size: 13px;
   line-height: 1.8;
   color: #e5e5e5;
@@ -319,7 +336,7 @@ body {
   border: 1px solid #1f1f1f;
   border-radius: var(--radius-md);
   overflow: hidden;
-  font-family: var(--font-jetbrains), 'JetBrains Mono', monospace;
+  font-family: var(--font-jetbrains), "JetBrains Mono", monospace;
   font-size: 13px;
   line-height: 1.7;
 }
@@ -389,13 +406,22 @@ body {
    ═══════════════════════════════════════════════ */
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeUp {
@@ -454,17 +480,27 @@ body {
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 @keyframes scroll-hint {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
     transform: translateY(0);
   }
@@ -475,21 +511,90 @@ body {
 }
 
 @keyframes typing {
-  from { width: 0; }
-  to { width: 100%; }
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes scroll-infinite {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes scroll-infinite-reverse {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(200%);
+    opacity: 0;
+  }
+}
+
+.animate-scroll-infinite {
+  animation: scroll-infinite 40s linear infinite;
+}
+
+.animate-scroll-infinite-reverse {
+  animation: scroll-infinite-reverse 40s linear infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 1.5s infinite;
 }
 
 @keyframes grain {
-  0%, 100% { transform: translate(0, 0); }
-  10% { transform: translate(-5%, -10%); }
-  20% { transform: translate(-15%, 5%); }
-  30% { transform: translate(7%, -25%); }
-  40% { transform: translate(-5%, 25%); }
-  50% { transform: translate(-15%, 10%); }
-  60% { transform: translate(15%, 0%); }
-  70% { transform: translate(0%, 15%); }
-  80% { transform: translate(3%, 35%); }
-  90% { transform: translate(-10%, 10%); }
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-5%, -10%);
+  }
+  20% {
+    transform: translate(-15%, 5%);
+  }
+  30% {
+    transform: translate(7%, -25%);
+  }
+  40% {
+    transform: translate(-5%, 25%);
+  }
+  50% {
+    transform: translate(-15%, 10%);
+  }
+  60% {
+    transform: translate(15%, 0%);
+  }
+  70% {
+    transform: translate(0%, 15%);
+  }
+  80% {
+    transform: translate(3%, 35%);
+  }
+  90% {
+    transform: translate(-10%, 10%);
+  }
 }
 
 /* ── Utility Animation Classes ── */
@@ -552,7 +657,7 @@ body {
 
 /* ── Noise Texture Overlay ── */
 .noise::before {
-  content: '';
+  content: "";
   position: fixed;
   top: -50%;
   left: -50%;
@@ -574,7 +679,10 @@ body {
   font-family: var(--font-plus-jakarta), sans-serif;
 }
 
-.prose h1, .prose h2, .prose h3, .prose h4 {
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
   font-family: var(--font-sora), sans-serif;
   color: var(--text-primary);
   font-weight: 700;
@@ -583,9 +691,15 @@ body {
   margin-bottom: 0.75em;
 }
 
-.prose h1 { font-size: 2rem; }
-.prose h2 { font-size: 1.5rem; }
-.prose h3 { font-size: 1.25rem; }
+.prose h1 {
+  font-size: 2rem;
+}
+.prose h2 {
+  font-size: 1.5rem;
+}
+.prose h3 {
+  font-size: 1.25rem;
+}
 
 .prose p {
   margin-bottom: 1.25em;
@@ -618,7 +732,8 @@ body {
   margin: 1.5em 0;
 }
 
-.prose ul, .prose ol {
+.prose ul,
+.prose ol {
   padding-left: 24px;
   margin-bottom: 1.25em;
 }
@@ -634,7 +749,11 @@ body {
 
 /* ── Gradient Text ── */
 .text-gradient {
-  background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-tertiary) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--text-primary) 0%,
+    var(--text-tertiary) 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

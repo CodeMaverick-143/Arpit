@@ -1,5 +1,21 @@
 [
     {
+        "slug": "Recoil: How I Built a Tactical Port Manager with Rust and Tauri — and Why You Need One",
+        "title": "Recoil: How I Built a Tactical Port Manager with Rust and Tauri — and Why You Need One",
+        "excerpt": "Recoil is a cross-platform desktop application built with Tauri v2 and React. It’s a specialized system monitor with a singular, sharp focus: network port transparency",
+        "date": "2026-06-23",
+        "readTime": "5 min read",
+        "tags": [
+            "rust",
+            " Tauri",
+            "framework",
+            "desktop",
+            "system tools"
+        ],
+        "featured": true,
+        "link": "https://medium.com/@codemaverick-143/recoil-how-i-built-a-tactical-port-manager-with-rust-and-tauri-and-why-you-need-one-882d0be52f7b"
+    },
+    {
         "slug": "Why I Built a Node.js Framework That Actually Handles Real-World Data",
         "title": "Why I Built a Node.js Framework That Actually Handles Real-World Data",
         "excerpt": "The problem with modern backend frameworks isn’t what they do. It’s what they pretend doesn’t exist.",

@@ -84,12 +84,19 @@ export default function RootLayout({
       className={`${sora.variable} ${plusJakartaSans.variable} ${jetbrainsMono.variable} dark`}
       suppressHydrationWarning
     >
+      <head>
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+        />
+      </head>
       <body className="min-h-screen flex flex-col antialiased">
         <ThemeProvider>
           <CustomCursor />
           <CommandPalette />
           <Navbar />
-          <main className="flex-1" style={{ paddingTop: 'var(--nav-height)' }}>
+          <main className="flex-1" style={{ paddingTop: "var(--nav-height)" }}>
             {children}
           </main>
           <Footer />

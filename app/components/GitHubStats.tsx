@@ -7,7 +7,7 @@ import ScrollReveal from "./ScrollReveal";
 interface Activity {
   date: string;
   count: number;
-  level: number;
+  level: 0 | 1 | 2 | 3 | 4;
 }
 
 export default function GitHubStats() {

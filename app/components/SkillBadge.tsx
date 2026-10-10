@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { useInView } from '@/hooks/useInView';
+import { motion } from "framer-motion";
+import { useInView } from "@/hooks/useInView";
 
 interface SkillBadgeProps {
   name: string;
@@ -25,12 +25,15 @@ export default function SkillBadge({ name, index }: SkillBadgeProps) {
       <div
         className="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full transition-all duration-500 cursor-default"
         style={{
-          background: 'var(--surface-1)',
-          border: '1px solid var(--border)',
+          background: "var(--surface-1)",
+          border: "1px solid var(--border)",
         }}
       >
-        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/50 group-hover:bg-emerald-400 group-hover:shadow-[0_0_8px_rgba(52,211,153,0.6)] transition-all duration-300" />
-        <span className="brand-mono text-[10px] uppercase font-bold tracking-widest" style={{ color: 'var(--text-secondary)' }}>
+        <div className="w-1.5 h-1.5 rounded-full bg-[var(--text-muted)] group-hover:bg-[var(--text-primary)] transition-all duration-300" />
+        <span
+          className="brand-mono text-[10px] uppercase font-bold tracking-widest"
+          style={{ color: "var(--text-secondary)" }}
+        >
           {name}
         </span>
       </div>

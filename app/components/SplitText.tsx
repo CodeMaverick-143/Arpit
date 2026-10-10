@@ -1,70 +1,57 @@
-'use client';
-
-import { motion } from 'framer-motion';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
-
 interface SplitTextProps {
   text: string;
   className?: string;
+  /** Seconds before the first word starts */
   delay?: number;
+  /** Seconds between words */
   staggerDelay?: number;
-  as?: 'h1' | 'h2' | 'h3' | 'p' | 'span';
+  as?: "h1" | "h2" | "h3" | "p" | "span";
+  /** Wrap these words in the brand gradient */
+  highlight?: string[];
 }
 
+/**
+ * Word-by-word reveal driven by CSS (`.word-reveal` in globals.css).
+ * Renders on the server and starts animating at first paint — no hydration
+ * wait, so the hero heading counts toward LCP immediately. Screen readers
+ * get the plain string; the animated spans are aria-hidden.
+ */
 export default function SplitText({
   text,
-  className = '',
-  delay = 0,
-  staggerDelay = 0.04,
-  as: Tag = 'h1',
+  className = "",
+  delay = 0.08,
+  staggerDelay = 0.07,
+  as: Tag = "h1",
+  highlight = [],
 }: SplitTextProps) {
-  const prefersReducedMotion = useReducedMotion();
-  const words = text.split(' ');
-
-  if (prefersReducedMotion) {
-    return <Tag className={className}>{text}</Tag>;
-  }
+  const words = text.split(" ");
 
   return (
-    <Tag className={className}>
-      <span className="sr-only">{text}</span>
-      <motion.span
-        aria-hidden
-        initial="hidden"
-        animate="visible"
-        variants={{
-          hidden: {},
-          visible: {
-            transition: {
-              staggerChildren: staggerDelay,
-              delayChildren: delay,
-            },
-          },
-        }}
-        className="inline"
-      >
+    <Tag className={className} aria-label={text}>
+      <span aria-hidden className="inline">
         {words.map((word, i) => (
-          <span key={i} className="inline-block overflow-hidden mr-[0.25em]">
-            <motion.span
-              className="inline-block"
-              variants={{
-                hidden: { y: '110%', opacity: 0, rotateX: -80 },
-                visible: {
-                  y: '0%',
-                  opacity: 1,
-                  rotateX: 0,
-                  transition: {
-                    duration: 0.7,
-                    ease: [0.25, 0.46, 0.45, 0.94],
-                  },
-                },
-              }}
+          <span
+            key={i}
+            className="word-reveal mr-[0.25em]"
+            style={
+              {
+                "--i": i,
+                "--base": `${delay * 1000}ms`,
+                perspective: "600px",
+              } as React.CSSProperties
+            }
+          >
+            <span
+              className={
+                highlight.includes(word) ? "text-gradient-brand" : undefined
+              }
+              style={{ animationDelay: `${delay + i * staggerDelay}s` }}
             >
               {word}
-            </motion.span>
+            </span>
           </span>
         ))}
-      </motion.span>
+      </span>
     </Tag>
   );
 }

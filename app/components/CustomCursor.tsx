@@ -1,112 +1,96 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useState } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+import { useIsTouch } from "@/hooks/useIsTouch";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { spring } from "@/lib/motion";
 
+const INTERACTIVE =
+  'a, button, [role="button"], input, textarea, select, [data-cursor-hover]';
+
+/**
+ * Custom cursor driven entirely by MotionValues: pointer movement never
+ * triggers a React render. Hover detection uses a single delegated
+ * `pointerover` listener instead of per-element listeners + MutationObserver.
+ */
 export default function CustomCursor() {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const isTouch = useIsTouch();
+  const prefersReducedMotion = useReducedMotion();
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  const x = useMotionValue(-100);
+  const y = useMotionValue(-100);
+  const sx = useSpring(x, spring.cursor);
+  const sy = useSpring(y, spring.cursor);
 
   useEffect(() => {
-    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-      setIsTouchDevice(true);
-      return;
-    }
+    if (isTouch) return;
 
-    const handleMouseMove = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
-      setIsVisible(true);
+    const onMove = (e: PointerEvent) => {
+      x.set(e.clientX);
+      y.set(e.clientY);
+      if (!isVisible) setIsVisible(true);
+    };
+    const onLeave = () => setIsVisible(false);
+    const onEnter = () => setIsVisible(true);
+    const onOver = (e: PointerEvent) => {
+      const target = e.target as Element | null;
+      setIsHovering(!!target?.closest(INTERACTIVE));
     };
 
-    const handleMouseLeave = () => setIsVisible(false);
-    const handleMouseEnter = () => setIsVisible(true);
-
-    const handleHoverStart = () => setIsHovering(true);
-    const handleHoverEnd = () => setIsHovering(false);
-
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseleave', handleMouseLeave);
-    document.addEventListener('mouseenter', handleMouseEnter);
-
-    // Track hover on interactive elements
-    const interactiveElements = document.querySelectorAll(
-      'a, button, [role="button"], input, textarea, select, [data-cursor-hover]'
-    );
-    interactiveElements.forEach((el) => {
-      el.addEventListener('mouseenter', handleHoverStart);
-      el.addEventListener('mouseleave', handleHoverEnd);
-    });
+    window.addEventListener("pointermove", onMove, { passive: true });
+    document.addEventListener("pointerover", onOver, { passive: true });
+    document.documentElement.addEventListener("mouseleave", onLeave);
+    document.documentElement.addEventListener("mouseenter", onEnter);
 
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseleave', handleMouseLeave);
-      document.removeEventListener('mouseenter', handleMouseEnter);
-      interactiveElements.forEach((el) => {
-        el.removeEventListener('mouseenter', handleHoverStart);
-        el.removeEventListener('mouseleave', handleHoverEnd);
-      });
+      window.removeEventListener("pointermove", onMove);
+      document.removeEventListener("pointerover", onOver);
+      document.documentElement.removeEventListener("mouseleave", onLeave);
+      document.documentElement.removeEventListener("mouseenter", onEnter);
     };
-  }, []);
+  }, [isTouch, isVisible, x, y]);
 
-  // Re-attach hover listeners when DOM changes
-  useEffect(() => {
-    if (isTouchDevice) return;
-
-    const observer = new MutationObserver(() => {
-      const interactiveElements = document.querySelectorAll(
-        'a, button, [role="button"], input, textarea, select, [data-cursor-hover]'
-      );
-      interactiveElements.forEach((el) => {
-        el.addEventListener('mouseenter', () => setIsHovering(true));
-        el.addEventListener('mouseleave', () => setIsHovering(false));
-      });
-    });
-
-    observer.observe(document.body, { childList: true, subtree: true });
-    return () => observer.disconnect();
-  }, [isTouchDevice]);
-
-  if (isTouchDevice) return null;
+  if (isTouch || prefersReducedMotion) return null;
 
   return (
     <>
-      {/* Dot */}
+      {/* Dot — tracks instantly */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference"
-        animate={{
-          x: position.x - 4,
-          y: position.y - 4,
+        aria-hidden
+        className="pointer-events-none fixed top-0 left-0 z-[9998] rounded-full mix-blend-difference"
+        style={{
+          x,
+          y,
+          translateX: "-50%",
+          translateY: "-50%",
+          width: 6,
+          height: 6,
+          background: "#fff",
           opacity: isVisible ? 1 : 0,
         }}
-        transition={{ type: 'spring', stiffness: 500, damping: 28, mass: 0.5 }}
-      >
-        <div
-          className="w-2 h-2 rounded-full"
-          style={{ background: '#ffffff' }}
-        />
-      </motion.div>
-
-      {/* Ring */}
+      />
+      {/* Ring — springs behind, grows on interactive targets */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9998] mix-blend-difference"
-        animate={{
-          x: position.x - (isHovering ? 24 : 16),
-          y: position.y - (isHovering ? 24 : 16),
-          width: isHovering ? 48 : 32,
-          height: isHovering ? 48 : 32,
-          opacity: isVisible ? 0.5 : 0,
+        aria-hidden
+        className="pointer-events-none fixed top-0 left-0 z-[9998] rounded-full border mix-blend-difference"
+        style={{
+          x: sx,
+          y: sy,
+          translateX: "-50%",
+          translateY: "-50%",
+          borderColor: "#fff",
         }}
-        transition={{ type: 'spring', stiffness: 200, damping: 20, mass: 0.8 }}
-      >
-        <div
-          className="w-full h-full rounded-full"
-          style={{
-            border: '1px solid #ffffff',
-          }}
-        />
-      </motion.div>
+        animate={{
+          width: isHovering ? 44 : 28,
+          height: isHovering ? 44 : 28,
+          opacity: isVisible ? (isHovering ? 0.9 : 0.5) : 0,
+          borderWidth: isHovering ? 1.5 : 1,
+        }}
+        transition={{ type: "spring", stiffness: 300, damping: 25 }}
+      />
     </>
   );
 }

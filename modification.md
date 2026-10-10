@@ -79,3 +79,56 @@ _Goal: The "Experience Developer" feel._
   - Create a branded `not-found.tsx` (404 page) that reflects the "terminal" aesthetic.
 - [x] **Theme Persistence:**
   - Ensure the theme transition is completely flicker-free using a blocking script in `layout.tsx` (if not already fully handled by `ThemeProvider`). <!-- id: polish -->
+
+## 7. Frontend, UX, 3D & Motion Overhaul
+
+_Goal: Faster first paint, richer interactions, consistent motion — without sacrificing accessibility._
+
+### Fix-first (performance)
+
+- [x] Homepage is a server component again; only interactive leaves are client (`HeroBackground`, `HeroTerminal`, `HorizontalProjects`, …).
+- [x] Hero heading reveals via CSS (`.word-reveal`) at first paint — no hydration wait for LCP.
+- [x] Render-blocking devicon CDN stylesheet removed; 25 SVGs self-hosted in `public/icons/tech/`.
+- [x] `CustomCursor` runs on MotionValues + one delegated `pointerover` listener (no per-move renders, no MutationObserver).
+- [x] `useScrollProgress` → framer `useScroll`; `AnimatedCounter` renders the MotionValue directly.
+- [x] Navbar colours via CSS variables (`color-mix`), transforms only interpolate opacity/shadow.
+- [x] Duplicate `@keyframes shimmer` removed; grain overlay is static (no full-screen repaint loop).
+- [x] Hard-coded stats replaced by `data/stats.ts` (derived from projects/skills).
+- [x] `runtime = "edge"` dropped; `generateStaticParams` + `dynamicParams = false` — every route is static.
+- [x] Font weights trimmed (Sora 700/800), `CommandPalette` static, `DeveloperMode` / three.js / calendar lazy.
+- [x] `content-visibility: auto` on below-fold sections; `@next/bundle-analyzer` (`npm run analyze`).
+
+### 3D
+
+- [x] `TiltCard` (pointer-driven rotateX/Y + glare) on every project card.
+- [x] Lazy R3F hero scene (`components/three/HeroScene.tsx`): wireframe icosahedra + particle shell, pointer parallax; pauses off-screen; static mesh-gradient fallback on touch/reduced-motion/no-WebGL.
+- [x] Terminal as a 3D window that straightens on scroll (`HeroTerminal`).
+- [x] Hero parallax layers (`Parallax`), flip skill cards (`SkillCard`), DOM tag sphere (`TagSphere`), sticky stacking cards (`StackCards`), CSS mesh-gradient backdrop.
+
+### Scroll
+
+- [x] Lenis smooth scroll (`SmoothScroll`, off for reduced motion), reading-progress bar, pinned horizontal projects section, self-drawing timeline, word-by-word `RevealText`, hide-on-scroll navbar, back-to-top with progress ring, scroll-spy TOC on case studies, native `animation-timeline: view()` reveals (`.reveal-css`).
+
+### Animation & micro-interactions
+
+- [x] Route transitions (`app/template.tsx`), motion tokens (`lib/motion.ts`), `StaggerGrid`, cursor spotlight (`SpotlightEffect` + `[data-spotlight]`), `ScrambleText` headings, monochrome accent rings (`.gradient-border`), button shine/press, skeleton shimmer, interactive 404 terminal + glitch, confetti on contact success, circular theme reveal via View Transitions.
+
+### Visual & UX
+
+- [x] Fluid type scale, strictly monochrome palette (`--brand` = ink/white per theme — no coloured gradients anywhere; highlighted words are outlined via `-webkit-text-stroke`), bento snapshot on About, light-mode glow/noise tuning, WCAG-safe `--text-tertiary` / `--text-muted`.
+- [x] Project filter + search synced to URL (`?category=&q=`), animated layout changes.
+- [x] Contact form: zod inline validation, loading state, toasts, copy-email button (submission still mocked — wire `submit()` in `ContactForm.tsx` to a real endpoint).
+- [x] ⌘K hint, `/` and `?` shortcuts, keyboard-shortcuts modal; prev/next case-study links; breadcrumbs + JSON-LD.
+- [x] Mobile: 44px targets, full-screen menu, swipeable snap rows instead of auto-marquee.
+- [x] "Now" widget (`data/stats.ts → now`), dynamic OG images (site + per project).
+
+### Accessibility
+
+- [x] All new motion respects `prefers-reduced-motion`; focus trap in palette/menu/help; visible `:focus-visible` rings; skip link; carousel pause control; `aria-label` on split/scrambled text; theme set pre-paint via inline script.
+
+### Still open
+
+- [ ] Real project screenshots (`project.image`) — `next/image` + `sizes` are wired, assets are missing.
+- [ ] Shared-element transition card → case study (needs React `<ViewTransition>` once stable).
+- [ ] Contact form backend.
+- [ ] Lighthouse run against the Cloudflare deployment to confirm LCP/CLS/INP targets.

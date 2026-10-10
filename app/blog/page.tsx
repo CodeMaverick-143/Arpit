@@ -1,18 +1,21 @@
-'use client';
+import type { Metadata } from "next";
+import Link from "next/link";
+import SectionHeading from "../components/SectionHeading";
+import ScrollReveal from "../components/ScrollReveal";
+import StaggerGrid, { StaggerItem } from "../components/StaggerGrid";
+import { ArrowRightIcon } from "../components/Icons";
+import { blogPosts } from "@/data/blog";
+import { formatDate } from "@/lib/utils";
 
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import SectionHeading from '../components/SectionHeading';
-import ScrollReveal from '../components/ScrollReveal';
-import { blogPosts } from '@/data/blog';
-import { formatDate } from '@/lib/utils';
+export const metadata: Metadata = {
+  title: "Blog",
+  description:
+    "Thoughts on engineering, systems design, AI, startups, and building products. A developer-founder journal.",
+};
 
 export default function BlogPage() {
   const featured = blogPosts.find((p) => p.featured) || blogPosts[0];
   const others = blogPosts.filter((p) => p.slug !== featured?.slug);
-
-
-
 
   return (
     <div className="noise">
@@ -27,60 +30,99 @@ export default function BlogPage() {
           {/* Featured Post */}
           {featured && (
             <ScrollReveal className="mb-12">
-              <Link href={featured.link} target="_blank" rel="noopener noreferrer">
-                <div
-                  className="group p-8 md:p-12 rounded-xl transition-all duration-300 hover:border-[var(--text-muted)]"
+              <Link
+                href={featured.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block group"
+              >
+                <article
+                  data-spotlight
+                  className="card-lift gradient-border gradient-border-hover p-8 md:p-12 rounded-2xl"
                   style={{
-                    background: 'var(--surface-1)',
-                    border: '1px solid var(--border)',
+                    background: "var(--surface-1)",
+                    border: "1px solid var(--border)",
                   }}
                 >
-                  <div className="flex items-center gap-4 mb-6">
-                    <span className="brand-mono text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-sm" style={{ background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.2)', color: '#10b981' }}>
+                  <div className="flex flex-wrap items-center gap-4 mb-6">
+                    <span
+                      className="brand-mono text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-sm"
+                      style={{
+                        background: "var(--brand-soft)",
+                        border: "1px solid var(--brand-border)",
+                        color: "var(--brand)",
+                      }}
+                    >
                       Featured
                     </span>
-                    <span className="brand-mono text-[10px] font-bold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
-                      {formatDate(featured.date)}
-                    </span>
-                    <span className="brand-mono text-[10px] font-bold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
-                      · {featured.readTime}
+                    <span
+                      className="brand-mono text-[10px] font-bold uppercase tracking-wider"
+                      style={{ color: "var(--text-muted)" }}
+                    >
+                      {formatDate(featured.date)} · {featured.readTime}
                     </span>
                   </div>
                   <h2
-                    className="heading-section text-3xl md:text-5xl mb-6 group-hover:text-gradient transition-all leading-tight"
-                    style={{ color: 'var(--text-primary)' }}
+                    className="heading-section text-h2 mb-6 group-hover:text-gradient transition-all leading-tight"
+                    style={{ color: "var(--text-primary)" }}
                   >
                     {featured.title}
                   </h2>
                   <p className="text-body text-base md:text-lg max-w-3xl mb-8 leading-relaxed">
                     {featured.excerpt}
                   </p>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     {featured.tags.map((tag) => (
-                      <span key={tag} className="brand-mono text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-sm" style={{ background: 'var(--surface-2)', border: '1px solid var(--border)', color: 'var(--text-tertiary)' }}>{tag}</span>
+                      <span
+                        key={tag}
+                        className="brand-mono text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-sm"
+                        style={{
+                          background: "var(--surface-2)",
+                          border: "1px solid var(--border)",
+                          color: "var(--text-tertiary)",
+                        }}
+                      >
+                        {tag.trim()}
+                      </span>
                     ))}
+                    <span
+                      className="ml-auto inline-flex items-center gap-2 brand-mono text-[10px] font-bold uppercase tracking-widest"
+                      style={{ color: "var(--text-muted)" }}
+                    >
+                      Read{" "}
+                      <ArrowRightIcon
+                        size={12}
+                        className="transition-transform group-hover:translate-x-1"
+                      />
+                    </span>
                   </div>
-                </div>
+                </article>
               </Link>
             </ScrollReveal>
           )}
 
           {/* Post List */}
-          <div className="space-y-4">
-            {others.map((post, i) => (
-              <ScrollReveal key={post.slug} delay={i * 0.05}>
-                <Link href={post.link} target="_blank" rel="noopener noreferrer">
-                  <div
-                    className="group flex flex-col md:flex-row md:items-center gap-4 md:gap-12 p-8 rounded-xl transition-all duration-300 hover:border-[var(--text-muted)]"
+          <StaggerGrid className="space-y-4" stagger={0.05}>
+            {others.map((post) => (
+              <StaggerItem key={post.slug}>
+                <Link
+                  href={post.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block group"
+                >
+                  <article
+                    data-spotlight
+                    className="card-lift flex flex-col md:flex-row md:items-center gap-4 md:gap-12 p-6 md:p-8 rounded-xl"
                     style={{
-                      background: 'var(--surface-1)',
-                      border: '1px solid var(--border)',
+                      background: "var(--surface-1)",
+                      border: "1px solid var(--border)",
                     }}
                   >
                     <div className="flex-1 min-w-0">
                       <h3
                         className="text-xl font-bold tracking-tight mb-2 group-hover:text-gradient transition-all"
-                        style={{ color: 'var(--text-primary)' }}
+                        style={{ color: "var(--text-primary)" }}
                       >
                         {post.title}
                       </h3>
@@ -95,38 +137,33 @@ export default function BlogPage() {
                             key={tag}
                             className="brand-mono text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-sm"
                             style={{
-                              color: 'var(--text-tertiary)',
-                              background: 'var(--surface-2)',
-                              border: '1px solid var(--border)',
+                              color: "var(--text-tertiary)",
+                              background: "var(--surface-2)",
+                              border: "1px solid var(--border)",
                             }}
                           >
-                            {tag}
+                            {tag.trim()}
                           </span>
                         ))}
                       </div>
                       <div className="flex items-center gap-4">
-                        <span className="brand-mono text-[10px] font-bold uppercase tracking-wider flex-shrink-0" style={{ color: 'var(--text-muted)' }}>
-                          {post.readTime}
-                        </span>
-                        <svg
-                          width="18"
-                          height="18"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2.5"
-                          className="flex-shrink-0 transition-transform group-hover:translate-x-1.5"
-                          style={{ color: 'var(--text-muted)' }}
+                        <span
+                          className="brand-mono text-[10px] font-bold uppercase tracking-wider flex-shrink-0"
+                          style={{ color: "var(--text-muted)" }}
                         >
-                          <path d="M5 12h14M12 5l7 7-7 7" />
-                        </svg>
+                          {formatDate(post.date)} · {post.readTime}
+                        </span>
+                        <ArrowRightIcon
+                          size={18}
+                          className="flex-shrink-0 transition-transform group-hover:translate-x-1.5"
+                        />
                       </div>
                     </div>
-                  </div>
+                  </article>
                 </Link>
-              </ScrollReveal>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGrid>
         </div>
       </section>
     </div>

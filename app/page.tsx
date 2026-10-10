@@ -1,16 +1,17 @@
-"use client";
-
-import { motion } from "framer-motion";
 import Link from "next/link";
 import SplitText from "./components/SplitText";
-import Terminal from "./components/Terminal";
+import HeroBackground from "./components/HeroBackground";
+import HeroTerminal from "./components/HeroTerminal";
+import Parallax from "./components/Parallax";
 import ScrollIndicator from "./components/ScrollIndicator";
 import ScrollReveal from "./components/ScrollReveal";
 import AnimatedCounter from "./components/AnimatedCounter";
 import SkillsCarousel from "./components/SkillsCarousel";
 import MagneticButton from "./components/MagneticButton";
-import ProjectCard from "./components/ProjectCard";
+import HorizontalProjects from "./components/HorizontalProjects";
 import SectionHeading from "./components/SectionHeading";
+import StaggerGrid, { StaggerItem } from "./components/StaggerGrid";
+import NowWidget from "./components/NowWidget";
 import {
   ArrowRightIcon,
   LayoutIcon,
@@ -24,6 +25,7 @@ import { projects } from "@/data/projects";
 import { techStack } from "@/data/skills";
 import { siteConfig } from "@/data/navigation";
 import { blogPosts } from "@/data/blog";
+import { stats, now } from "@/data/stats";
 import { formatDate } from "@/lib/utils";
 
 const terminalLines = [
@@ -48,95 +50,122 @@ const terminalLines = [
   { type: "command" as const, text: "echo $CURRENT_FOCUS", delay: 600 },
   {
     type: "output" as const,
-    text: "Building IdeaToIPO — AI multi-agent platform",
+    text: `Building ${now.building} — ${now.buildingDescription}`,
     delay: 400,
   },
   { type: "empty" as const, text: "", delay: 200 },
   { type: "command" as const, text: "ls ~/projects | wc -l", delay: 700 },
-  { type: "output" as const, text: "23 open-source repositories", delay: 500 },
+  {
+    type: "output" as const,
+    text: `${stats.projects} open-source repositories`,
+    delay: 500,
+  },
 ];
 
+const areas = [
+  {
+    icon: <LayoutIcon size={20} />,
+    label: "Frontend",
+    detail: "React, Next.js, TypeScript",
+  },
+  {
+    icon: <ServerIcon size={20} />,
+    label: "Backend",
+    detail: "Go, Node.js, Python",
+  },
+  {
+    icon: <SmartphoneIcon size={20} />,
+    label: "Mobile",
+    detail: "React Native, Cross-Platform",
+  },
+  {
+    icon: <CpuIcon size={20} />,
+    label: "Systems",
+    detail: "Rust, Tauri, Shell",
+  },
+];
+
+/** Homepage — server component; only the interactive leaves are client. */
 export default function Home() {
   const featuredProjects = projects.filter((p) => p.featured);
   const latestBlogs = blogPosts.slice(0, 3);
+  const metrics = [
+    { value: stats.projects, suffix: "+", label: "Projects" },
+    { value: stats.coreStacks, suffix: "", label: "Core stacks" },
+    { value: stats.mobileApps, suffix: "", label: "Mobile apps" },
+  ];
 
   return (
     <div className="noise">
-      {/* ═══ HERO SECTION ═══ */}
-      <section className="relative min-h-[calc(100vh-var(--nav-height))] flex flex-col justify-center">
-        {/* Grid Pattern Background */}
-        <div className="absolute inset-0 grid-pattern opacity-[0.35]" />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 80% 50% at 50% -20%, rgba(120,119,198,0.08), transparent)",
-          }}
-        />
+      {/* ═══ HERO ═══ */}
+      <section className="relative min-h-[calc(100vh-var(--nav-height))] flex flex-col justify-center overflow-hidden">
+        <HeroBackground />
 
         <div className="container-wide relative z-10 py-20 md:py-0">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            {/* Left — Text Content */}
-            <div>
+            {/* Left — Text */}
+            <Parallax distance={-60} fade>
               {/* Status Badge */}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.5 }}
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-8"
-                style={{
-                  background: "var(--surface-1)",
-                  border: "1px solid var(--border)",
-                }}
+              <div
+                className="hero-reveal inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-8 glass-subtle"
+                style={{ "--d": "0ms" } as React.CSSProperties}
               >
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="relative flex h-2 w-2">
+                  <span
+                    className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60"
+                    style={{ background: "var(--brand)" }}
+                  />
+                  <span
+                    className="relative inline-flex rounded-full h-2 w-2"
+                    style={{ background: "var(--brand)" }}
+                  />
+                </span>
                 <span
                   className="font-code text-xs"
                   style={{ color: "var(--text-secondary)" }}
                 >
-                  Available for collaborations
+                  {now.status}
                 </span>
-              </motion.div>
+              </div>
 
-              {/* Name */}
+              {/* Name — visible at first paint, words slide up via CSS */}
               <SplitText
                 text={siteConfig.name}
-                className="heading-display text-6xl md:text-8xl mb-6 tracking-[-0.05em]"
-                delay={0.4}
-                staggerDelay={0.06}
+                className="heading-display text-hero mb-6 tracking-[-0.05em]"
+                delay={0.1}
+                staggerDelay={0.08}
                 as="h1"
+                highlight={["Sarang"]}
               />
 
               {/* Title */}
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.0, duration: 0.6 }}
-                className="brand-mono text-[12px] md:text-[13px] uppercase tracking-[0.2em] mb-8"
-                style={{ color: "var(--text-tertiary)" }}
+              <p
+                className="hero-reveal brand-mono text-[12px] md:text-[13px] uppercase tracking-[0.2em] mb-8"
+                style={
+                  {
+                    color: "var(--text-tertiary)",
+                    "--d": "350ms",
+                  } as React.CSSProperties
+                }
               >
                 {siteConfig.title}
-              </motion.p>
+              </p>
 
               {/* Tagline */}
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.2, duration: 0.6 }}
-                className="text-lg md:text-xl text-body max-w-xl mb-12 leading-relaxed"
+              <p
+                className="hero-reveal text-lead text-body max-w-xl mb-12 leading-relaxed"
+                style={{ "--d": "450ms" } as React.CSSProperties}
               >
                 {siteConfig.tagline}
-              </motion.p>
+              </p>
 
               {/* CTA Buttons */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.5, duration: 0.6 }}
-                className="flex flex-wrap gap-4 mb-14"
+              <div
+                className="hero-reveal flex flex-wrap gap-4 mb-14"
+                style={{ "--d": "550ms" } as React.CSSProperties}
               >
                 <MagneticButton href="/projects">
-                  <span className="btn-primary">
+                  <span className="btn-primary gradient-border">
                     View Projects
                     <ArrowRightIcon size={14} />
                   </span>
@@ -150,26 +179,20 @@ export default function Home() {
                     Resume
                   </span>
                 </MagneticButton>
-              </motion.div>
+              </div>
 
               {/* Metrics */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.8, duration: 0.8 }}
-                className="flex gap-12"
+              <div
+                className="hero-reveal flex gap-12"
+                style={{ "--d": "650ms" } as React.CSSProperties}
               >
-                {[
-                  { value: 23, suffix: "+", label: "Projects" },
-                  { value: 8, suffix: "+", label: "Core stacks" },
-                  { value: 4, suffix: "+", label: "Mobile" },
-                ].map((metric, i) => (
-                  <div key={i}>
+                {metrics.map((metric) => (
+                  <div key={metric.label}>
                     <AnimatedCounter
                       value={metric.value}
                       suffix={metric.suffix}
                       className="heading-display text-4xl md:text-5xl"
-                      duration={2.5}
+                      duration={2}
                     />
                     <p
                       className="brand-mono text-[9px] uppercase tracking-[0.2em] mt-2"
@@ -179,65 +202,31 @@ export default function Home() {
                     </p>
                   </div>
                 ))}
-              </motion.div>
-            </div>
+              </div>
+            </Parallax>
 
-            {/* Right — Terminal */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, x: 30 }}
-              animate={{ opacity: 1, scale: 1, x: 0 }}
-              transition={{
-                delay: 0.8,
-                duration: 0.8,
-                ease: [0.25, 0.46, 0.45, 0.94] as [
-                  number,
-                  number,
-                  number,
-                  number,
-                ],
-              }}
-              className="hidden lg:block"
-            >
-              <Terminal lines={terminalLines} title="~/arpitsarang — zsh" />
-            </motion.div>
+            {/* Right — Terminal (3D window) */}
+            <div className="hidden lg:block">
+              <HeroTerminal lines={terminalLines} title="~/arpitsarang — zsh" />
+            </div>
           </div>
         </div>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+        <div className="hidden md:block absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
           <ScrollIndicator />
         </div>
       </section>
 
-      {/* ═══ TECH STACK CAROUSEL ═══ */}
-      <section className="py-12 border-t border-[var(--border)] overflow-hidden">
+      {/* ═══ TECH STACK ═══ */}
+      <section className="py-6 border-t border-[var(--border)] overflow-hidden">
         <SkillsCarousel skills={techStack} />
       </section>
 
-      {/* ═══ FEATURED PROJECTS ═══ */}
-      <section
-        className="section"
-        style={{ borderTop: "1px solid var(--border)" }}
-      >
-        <div className="container-wide">
-          <SectionHeading
-            label="Selected Work"
-            title="Featured Projects"
-            description="A curated selection of projects across full-stack web, desktop apps, mobile, systems programming, and AI."
-          />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {featuredProjects.map((project, i) => (
-              <ProjectCard
-                key={project.slug}
-                project={project}
-                index={i}
-                featured={i === 0}
-              />
-            ))}
-          </div>
-
-          <ScrollReveal delay={0.3} className="mt-12 text-center">
+      {/* ═══ FEATURED PROJECTS — pinned horizontal scroll ═══ */}
+      <section className="border-t border-[var(--border)]">
+        <HorizontalProjects projects={featuredProjects} />
+        <div className="container-wide pb-24 -mt-8 md:mt-0 text-center">
+          <ScrollReveal>
             <Link
               href="/projects"
               className="btn-secondary inline-flex items-center gap-2"
@@ -249,9 +238,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══ ABOUT PREVIEW ═══ */}
+      {/* ═══ ABOUT PREVIEW — bento ═══ */}
       <section
-        className="section"
+        className="section cv-auto"
         style={{ borderTop: "1px solid var(--border)" }}
       >
         <div className="container-wide">
@@ -264,12 +253,14 @@ export default function Home() {
               <p className="text-body text-base md:text-lg mb-6">
                 I build software that ships and scales — from Rust-powered
                 desktop apps and Go backend services to React frontends and
-                React Native mobile apps. With 23+ open-source projects, I focus
-                on solving real problems with clean architecture.
+                React Native mobile apps. With {stats.projects}+ open-source
+                projects, I focus on solving real problems with clean
+                architecture.
               </p>
               <p className="text-body text-base md:text-lg mb-8">
-                Currently building IdeaToIPO (AI multi-agent platform) and
-                SkillFest (production event management platform on Cloudflare).
+                Currently building {now.building} ({now.buildingDescription})
+                and SkillFest (production event management platform on
+                Cloudflare).
               </p>
               <Link
                 href="/about"
@@ -280,34 +271,12 @@ export default function Home() {
               </Link>
             </ScrollReveal>
 
-            <ScrollReveal delay={0.2}>
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  {
-                    icon: <LayoutIcon size={20} />,
-                    label: "Frontend",
-                    detail: "React, Next.js, TypeScript",
-                  },
-                  {
-                    icon: <ServerIcon size={20} />,
-                    label: "Backend",
-                    detail: "Go, Node.js, Python",
-                  },
-                  {
-                    icon: <SmartphoneIcon size={20} />,
-                    label: "Mobile",
-                    detail: "React Native, Cross-Platform",
-                  },
-                  {
-                    icon: <CpuIcon size={20} />,
-                    label: "Systems",
-                    detail: "Rust, Tauri, Shell",
-                  },
-                ].map((area) => (
-                  <motion.div
-                    key={area.label}
-                    whileHover={{ scale: 1.02, y: -2 }}
-                    className="p-5 rounded-xl transition-all"
+            <StaggerGrid className="grid grid-cols-2 gap-4">
+              {areas.map((area) => (
+                <StaggerItem key={area.label}>
+                  <div
+                    data-spotlight
+                    className="card-lift p-5 rounded-xl h-full"
                     style={{
                       background: "var(--surface-1)",
                       border: "1px solid var(--border)",
@@ -315,7 +284,7 @@ export default function Home() {
                   >
                     <span
                       className="block mb-3"
-                      style={{ color: "var(--text-secondary)" }}
+                      style={{ color: "var(--brand)" }}
                     >
                       {area.icon}
                     </span>
@@ -331,17 +300,20 @@ export default function Home() {
                     >
                       {area.detail}
                     </p>
-                  </motion.div>
-                ))}
-              </div>
-            </ScrollReveal>
+                  </div>
+                </StaggerItem>
+              ))}
+              <StaggerItem className="col-span-2">
+                <NowWidget />
+              </StaggerItem>
+            </StaggerGrid>
           </div>
         </div>
       </section>
 
       {/* ═══ LATEST BLOG POSTS ═══ */}
       <section
-        className="section"
+        className="section cv-auto"
         style={{ borderTop: "1px solid var(--border)" }}
       >
         <div className="container-wide">
@@ -351,16 +323,18 @@ export default function Home() {
             description="Deep dives into AI, engineering philosophy, and the future of coding."
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {latestBlogs.map((post, i) => (
-              <ScrollReveal key={post.slug} delay={i * 0.1}>
+          <StaggerGrid className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {latestBlogs.map((post) => (
+              <StaggerItem key={post.slug} className="h-full">
                 <Link
                   href={post.link}
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="block h-full"
                 >
-                  <div
-                    className="group flex flex-col h-full p-6 rounded-xl transition-all duration-300 hover:border-[var(--text-muted)]"
+                  <article
+                    data-spotlight
+                    className="group card-lift flex flex-col h-full p-6 rounded-xl"
                     style={{
                       background: "var(--surface-1)",
                       border: "1px solid var(--border)",
@@ -391,11 +365,11 @@ export default function Home() {
                         className="transition-transform group-hover:translate-x-1"
                       />
                     </div>
-                  </div>
+                  </article>
                 </Link>
-              </ScrollReveal>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGrid>
 
           <ScrollReveal delay={0.3} className="mt-12 text-center">
             <Link
@@ -409,21 +383,27 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══ CTA SECTION ═══ */}
-
+      {/* ═══ CTA ═══ */}
       <section
-        className="section"
+        className="section cv-auto relative overflow-hidden"
         style={{ borderTop: "1px solid var(--border)" }}
       >
-        <div className="container-tight text-center">
-          <ScrollReveal>
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 60% 50% at 50% 100%, var(--brand-soft), transparent 70%)",
+          }}
+        />
+        <div className="container-tight text-center relative">
+          <ScrollReveal direction="scale">
             <h2
-              className="heading-display text-3xl md:text-5xl mb-6"
+              className="heading-display text-h1 mb-6"
               style={{ color: "var(--text-primary)" }}
             >
               Let&apos;s build something
               <br />
-              ambitious together.
+              <span className="text-gradient-brand">ambitious</span> together.
             </h2>
             <p className="text-body text-lg mb-10 max-w-md mx-auto">
               Available for product collaborations, startup ideas, and technical
@@ -431,7 +411,9 @@ export default function Home() {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <MagneticButton href="/contact">
-                <span className="btn-primary">Get in Touch</span>
+                <span className="btn-primary gradient-border">
+                  Get in Touch
+                </span>
               </MagneticButton>
               <MagneticButton href="https://github.com/CodeMaverick-143">
                 <span className="btn-secondary">

@@ -1,11 +1,18 @@
-"use client";
-
-import { motion } from "framer-motion";
+import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import ScrollReveal from "../components/ScrollReveal";
 import SectionHeading from "../components/SectionHeading";
 import SkillCard from "../components/SkillCard";
-import GitHubStats from "../components/GitHubStats";
-import { skillCategories, exploring } from "@/data/skills";
+import SplitText from "../components/SplitText";
+import RevealText from "../components/RevealText";
+import StackCards from "../components/StackCards";
+import NowWidget from "../components/NowWidget";
+import GitHubStats from "../components/GitHubStatsLazy";
+import AnimatedCounter from "../components/AnimatedCounter";
+import StaggerGrid, { StaggerItem } from "../components/StaggerGrid";
+import { skillCategories, exploring, techStack } from "@/data/skills";
+import { stats, now } from "@/data/stats";
+import { socialLinks } from "@/data/navigation";
 import {
   LayoutIcon,
   ServerIcon,
@@ -15,7 +22,17 @@ import {
   TerminalSquareIcon,
   CodeIcon,
   ArrowUpRightIcon,
+  GitHubIcon,
 } from "../components/Icons";
+
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "Full-stack engineer building across Rust, Go, React and React Native. Skills, philosophy and what I'm exploring now.",
+};
+
+// Heavy / interactive widgets load after the page is interactive
+const TagSphere = dynamic(() => import("../components/TagSphere"));
 
 function CategoryIcon({ name }: { name: string }) {
   const props = { size: 18 };
@@ -37,73 +54,176 @@ function CategoryIcon({ name }: { name: string }) {
   }
 }
 
+const principles = [
+  {
+    icon: <ServerIcon size={22} />,
+    title: "Ship Fast, Iterate Faster",
+    description:
+      "I believe in getting to users quickly. Perfect is the enemy of shipped. Build the smallest thing that validates the assumption, then improve ruthlessly based on real feedback.",
+  },
+  {
+    icon: <CpuIcon size={22} />,
+    title: "Systems Thinking First",
+    description:
+      "Every feature is part of a larger system. I think about data flow, failure modes, and scaling characteristics before writing the first line of code. Architecture decisions compound.",
+  },
+  {
+    icon: <PenToolIcon size={22} />,
+    title: "Craft Matters",
+    description:
+      "Performance, design quality, and developer experience aren't nice-to-haves — they're competitive advantages. Users can feel the difference between thoughtful and thoughtless software.",
+  },
+];
+
 export default function AboutPage() {
-  // Flatten skill count for the hero stat
-  const totalSkills = skillCategories.reduce(
-    (sum, c) => sum + c.skills.length,
-    0,
-  );
+  const github = socialLinks.find((s) => s.icon === "github");
 
   return (
     <div className="noise">
       {/* ═══ HERO ═══ */}
-      <section className="section">
-        <div className="container-wide">
+      <section className="section relative overflow-hidden">
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 50% 40% at 80% 20%, var(--mesh-2), transparent 70%)",
+          }}
+        />
+        <div className="container-wide relative">
           <div className="max-w-4xl">
-            <motion.div
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              className="flex items-center gap-3 mb-8"
+            <div
+              className="hero-reveal flex items-center gap-3 mb-8"
+              style={{ "--d": "0ms" } as React.CSSProperties}
             >
-              <div className="w-10 h-px bg-[var(--border)]" />
+              <div
+                className="w-10 h-px"
+                style={{ background: "var(--brand)" }}
+              />
               <span
                 className="brand-mono text-[11px] font-bold uppercase tracking-[0.25em]"
                 style={{ color: "var(--text-tertiary)" }}
               >
                 About
               </span>
-            </motion.div>
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="heading-display text-5xl md:text-8xl mb-12 tracking-tight"
-              style={{ color: "var(--text-primary)" }}
-            >
-              I build software that
-              <br />
-              <span className="text-gradient">ships and scales.</span>
-            </motion.h1>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-body text-lg md:text-xl space-y-8 max-w-3xl leading-relaxed"
-            >
-              <p>
-                I&apos;m a full-stack engineer who builds across the entire
-                stack — from Rust-powered desktop apps and Go backend services
-                to React frontends and React Native mobile apps. I believe in
-                shipping real products, not just prototypes.
-              </p>
-              <p>
-                With 23+ open-source projects spanning web, mobile, systems
-                programming, and AI, I focus on building software that solves
-                real problems with clean architecture and production-grade
-                quality.
-              </p>
-              <p>
-                Currently building IdeaToIPO — an AI-powered multi-agent
-                platform for startup founders — and SkillFest, a production
-                event management platform deployed on Cloudflare.
-              </p>
-            </motion.div>
+            </div>
+            <SplitText
+              as="h1"
+              text="I build software that ships and scales."
+              highlight={["ships", "scales."]}
+              className="heading-display text-h1 mb-12 tracking-tight"
+            />
+            <div className="space-y-8 max-w-3xl">
+              <RevealText
+                className="text-body text-lead leading-relaxed"
+                text="I'm a full-stack engineer who builds across the entire stack — from Rust-powered desktop apps and Go backend services to React frontends and React Native mobile apps. I believe in shipping real products, not just prototypes."
+              />
+              <RevealText
+                className="text-body text-lead leading-relaxed"
+                text={`With ${stats.projects}+ open-source projects spanning web, mobile, systems programming, and AI, I focus on building software that solves real problems with clean architecture and production-grade quality.`}
+              />
+              <RevealText
+                className="text-body text-lead leading-relaxed"
+                text={`Currently building ${now.building} — ${now.buildingDescription} — and SkillFest, a production event management platform deployed on Cloudflare.`}
+              />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ═══ HOW I BUILD ═══ */}
+      {/* ═══ SNAPSHOT — bento ═══ */}
+      <section
+        className="section-sm"
+        style={{ borderTop: "1px solid var(--border)" }}
+      >
+        <div className="container-wide">
+          <StaggerGrid className="grid grid-cols-2 md:grid-cols-4 auto-rows-[minmax(140px,auto)] gap-4">
+            <StaggerItem className="col-span-2 row-span-2">
+              <NowWidget className="h-full" />
+            </StaggerItem>
+            <StaggerItem>
+              <Stat
+                value={stats.projects}
+                suffix="+"
+                label="Open-source projects"
+              />
+            </StaggerItem>
+            <StaggerItem>
+              <Stat value={stats.totalSkills} label="Skills, 6 domains" />
+            </StaggerItem>
+            <StaggerItem>
+              <Stat value={stats.liveProducts} label="Live deployments" />
+            </StaggerItem>
+            <StaggerItem>
+              <a
+                href={github?.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-spotlight
+                className="card-lift flex flex-col justify-between h-full p-5 rounded-2xl group"
+                style={{
+                  background: "var(--surface-1)",
+                  border: "1px solid var(--border)",
+                }}
+              >
+                <GitHubIcon size={22} />
+                <span className="flex items-center justify-between">
+                  <span
+                    className="text-sm font-semibold"
+                    style={{ color: "var(--text-primary)" }}
+                  >
+                    @CodeMaverick-143
+                  </span>
+                  <ArrowUpRightIcon
+                    size={14}
+                    className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  />
+                </span>
+              </a>
+            </StaggerItem>
+            <StaggerItem className="col-span-2 md:col-span-4">
+              <div
+                data-spotlight
+                className="flex flex-wrap items-center gap-x-8 gap-y-3 p-5 rounded-2xl"
+                style={{
+                  background: "var(--surface-1)",
+                  border: "1px solid var(--border)",
+                }}
+              >
+                <span
+                  className="brand-mono text-[10px] uppercase tracking-[0.25em]"
+                  style={{ color: "var(--text-muted)" }}
+                >
+                  Location
+                </span>
+                <span
+                  className="text-sm"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  {now.location}
+                </span>
+                <span
+                  className="hidden md:block w-px h-4"
+                  style={{ background: "var(--border)" }}
+                />
+                <span
+                  className="brand-mono text-[10px] uppercase tracking-[0.25em]"
+                  style={{ color: "var(--text-muted)" }}
+                >
+                  Focus
+                </span>
+                <span
+                  className="text-sm"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  Systems · AI · Developer tools
+                </span>
+              </div>
+            </StaggerItem>
+          </StaggerGrid>
+        </div>
+      </section>
+
+      {/* ═══ HOW I BUILD — stacking cards ═══ */}
       <section
         className="section"
         style={{ borderTop: "1px solid var(--border)" }}
@@ -114,82 +234,39 @@ export default function AboutPage() {
             title="How I Build"
             description="Principles that guide my engineering and product decisions."
           />
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                icon: <ServerIcon size={22} />,
-                title: "Ship Fast, Iterate Faster",
-                description:
-                  "I believe in getting to users quickly. Perfect is the enemy of shipped. Build the smallest thing that validates the assumption, then improve ruthlessly based on real feedback.",
-              },
-              {
-                icon: <CpuIcon size={22} />,
-                title: "Systems Thinking First",
-                description:
-                  "Every feature is part of a larger system. I think about data flow, failure modes, and scaling characteristics before writing the first line of code. Architecture decisions compound.",
-              },
-              {
-                icon: <PenToolIcon size={22} />,
-                title: "Craft Matters",
-                description:
-                  "Performance, design quality, and developer experience aren't nice-to-haves — they're competitive advantages. Users can feel the difference between thoughtful and thoughtless software.",
-              },
-            ].map((principle, i) => (
-              <ScrollReveal key={i} delay={i * 0.1}>
-                <div
-                  className="p-8 rounded-xl h-full"
-                  style={{
-                    background: "var(--surface-1)",
-                    border: "1px solid var(--border)",
-                  }}
-                >
-                  <span
-                    className="block mb-4"
-                    style={{ color: "var(--text-secondary)" }}
-                  >
-                    {principle.icon}
-                  </span>
-                  <h3
-                    className="text-lg font-semibold tracking-tight mb-3"
-                    style={{ color: "var(--text-primary)" }}
-                  >
-                    {principle.title}
-                  </h3>
-                  <p className="text-sm text-body">{principle.description}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
+          <StackCards items={principles} />
         </div>
       </section>
 
-      {/* ═══ SKILLS — PREMIUM DEVELOPER SECTION ═══ */}
+      {/* ═══ SKILLS ═══ */}
       <section
-        className="section"
+        className="section cv-auto"
         style={{ borderTop: "1px solid var(--border)" }}
       >
         <div className="container-wide">
-          <SectionHeading
-            label="Capabilities"
-            title="Technical Skills"
-            description={`${totalSkills} skills across ${skillCategories.length} domains — each one earned through real projects, not tutorials.`}
-          />
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-center mb-8">
+            <SectionHeading
+              label="Capabilities"
+              title="Technical Skills"
+              description={`${stats.totalSkills} skills across ${skillCategories.length} domains — each one earned through real projects, not tutorials. Hover a card to flip it.`}
+            />
+            <div className="hidden lg:flex justify-center">
+              <TagSphere tags={techStack} radius={140} />
+            </div>
+          </div>
 
           <GitHubStats />
 
-          {/* Category Blocks */}
           <div className="space-y-16">
-            {skillCategories.map((category, ci) => (
-              <ScrollReveal key={category.name} delay={ci * 0.06}>
-                {/* Category Header */}
+            {skillCategories.map((category) => (
+              <ScrollReveal key={category.name}>
                 <div className="flex items-center gap-4 mb-8">
                   <span
-                    className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                    className="w-10 h-10 rounded-xl flex items-center justify-center"
                     style={{
-                      background: "var(--surface-2)",
-                      border: "1px solid var(--border)",
-                      color: "var(--text-primary)",
+                      background: "var(--brand-soft)",
+                      border: "1px solid var(--brand-border)",
+                      color: "var(--brand)",
                     }}
                   >
                     <CategoryIcon name={category.iconName} />
@@ -211,7 +288,6 @@ export default function AboutPage() {
                   </div>
                 </div>
 
-                {/* Skill Cards Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   {category.skills.map((skill, si) => (
                     <SkillCard key={skill.name} skill={skill} index={si} />
@@ -225,7 +301,7 @@ export default function AboutPage() {
 
       {/* ═══ EXPLORING ═══ */}
       <section
-        className="section"
+        className="section cv-auto"
         style={{ borderTop: "1px solid var(--border)" }}
       >
         <div className="container-tight">
@@ -234,12 +310,12 @@ export default function AboutPage() {
             title="What I'm Exploring"
             description="Areas I'm actively learning and building in."
           />
-
-          <div className="space-y-4">
+          <StaggerGrid className="space-y-4" stagger={0.07}>
             {exploring.map((item, i) => (
-              <ScrollReveal key={i} delay={i * 0.08}>
+              <StaggerItem key={i}>
                 <div
-                  className="flex items-center gap-4 p-5 rounded-xl transition-all duration-300 hover:translate-x-2"
+                  data-spotlight
+                  className="reveal-css flex items-center gap-4 p-5 rounded-xl transition-transform duration-300 hover:translate-x-2"
                   style={{
                     background: "var(--surface-1)",
                     border: "1px solid var(--border)",
@@ -247,7 +323,7 @@ export default function AboutPage() {
                 >
                   <span
                     className="font-code text-xs flex-shrink-0 w-8 text-center"
-                    style={{ color: "var(--text-muted)" }}
+                    style={{ color: "var(--brand)" }}
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>
@@ -264,11 +340,45 @@ export default function AboutPage() {
                     <ArrowUpRightIcon size={14} />
                   </span>
                 </div>
-              </ScrollReveal>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGrid>
         </div>
       </section>
+    </div>
+  );
+}
+
+function Stat({
+  value,
+  suffix = "",
+  label,
+}: {
+  value: number;
+  suffix?: string;
+  label: string;
+}) {
+  return (
+    <div
+      data-spotlight
+      className="card-lift flex flex-col justify-between h-full p-5 rounded-2xl"
+      style={{
+        background: "var(--surface-1)",
+        border: "1px solid var(--border)",
+      }}
+    >
+      <AnimatedCounter
+        value={value}
+        suffix={suffix}
+        className="heading-display text-4xl"
+        duration={1.6}
+      />
+      <span
+        className="brand-mono text-[9px] uppercase tracking-[0.2em] mt-3"
+        style={{ color: "var(--text-muted)" }}
+      >
+        {label}
+      </span>
     </div>
   );
 }

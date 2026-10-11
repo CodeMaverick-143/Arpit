@@ -71,7 +71,7 @@ export default function GitHubStats() {
               href="https://github.com/CodeMaverick-143"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs font-bold hover:text-emerald-400 transition-colors"
+              className="text-xs font-bold hover:text-[var(--text-primary)] transition-colors"
               style={{ color: "var(--text-secondary)" }}
             >
               @CodeMaverick-143
@@ -86,8 +86,9 @@ export default function GitHubStats() {
             blockMargin={4}
             fontSize={12}
             theme={{
-              light: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
-              dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
+              // Monochrome contribution scale
+              light: ["#ebebeb", "#c4c4c4", "#8a8a8a", "#3d3d3d", "#0a0a0a"],
+              dark: ["#1a1a1a", "#3a3a3a", "#6b6b6b", "#a3a3a3", "#fafafa"],
             }}
             transformData={transformData}
             showColorLegend={false}

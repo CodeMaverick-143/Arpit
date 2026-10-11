@@ -1,6 +1,5 @@
 import { MetadataRoute } from "next";
 import { projects } from "@/data/projects";
-import { blogPosts } from "@/data/blog";
 import { siteConfig } from "@/data/navigation";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -11,13 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  const blogEntries = blogPosts.map((post) => ({
-    url: `${siteConfig.url}/blog/${post.slug}`,
-    lastModified: new Date(post.date),
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-  }));
-
+  // Blog posts live on external platforms, so only the index is listed here
   const routes = [
     "",
     "/about",
@@ -28,9 +21,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ].map((route) => ({
     url: `${siteConfig.url}${route}`,
     lastModified: new Date(),
-    changeFrequency: "daily" as const,
+    changeFrequency: "weekly" as const,
     priority: route === "" ? 1 : 0.8,
   }));
 
-  return [...routes, ...projectEntries, ...blogEntries];
+  return [...routes, ...projectEntries];
 }

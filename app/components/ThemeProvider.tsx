@@ -1,14 +1,30 @@
-'use client';
+"use client";
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useSyncExternalStore,
+} from "react";
+import {
+  applyTheme,
+  getServerTheme,
+  readTheme,
+  subscribeTheme,
+  type Theme,
+} from "@/lib/themeStore";
 
-type Theme = 'dark' | 'light';
+interface ToggleOptions {
+  /** Viewport coordinates to start the circular reveal from */
+  x?: number;
+  y?: number;
+}
 
 const ThemeContext = createContext<{
   theme: Theme;
-  toggleTheme: () => void;
+  toggleTheme: (opts?: ToggleOptions) => void;
 }>({
-  theme: 'dark',
+  theme: "dark",
   toggleTheme: () => {},
 });
 
@@ -16,39 +32,55 @@ export function useTheme() {
   return useContext(ThemeContext);
 }
 
+type DocWithVT = Document & {
+  startViewTransition?: (cb: () => void) => { ready: Promise<void> };
+};
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('dark');
-  const [mounted, setMounted] = useState(false);
+  const theme = useSyncExternalStore(subscribeTheme, readTheme, getServerTheme);
 
-  useEffect(() => {
-    setMounted(true);
-    const stored = localStorage.getItem('theme') as Theme | null;
-    if (stored) {
-      setTheme(stored);
-    } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-      setTheme('light');
+  /**
+   * Flip the theme. When the View Transitions API is available (and the
+   * user hasn't asked for reduced motion) the new theme expands as a circle
+   * from the toggle button.
+   */
+  const toggleTheme = useCallback((opts?: ToggleOptions) => {
+    const next: Theme = readTheme() === "dark" ? "light" : "dark";
+    const doc = document as DocWithVT;
+    const reduce = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (!doc.startViewTransition || reduce) {
+      applyTheme(next);
+      return;
     }
-  }, []);
 
-  useEffect(() => {
-    if (!mounted) return;
-    const root = document.documentElement;
-    root.classList.remove('light', 'dark');
-    root.classList.add(theme);
-    localStorage.setItem('theme', theme);
-  }, [theme, mounted]);
-
-  const toggleTheme = () => {
-    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
-  };
-
-  if (!mounted) {
-    return (
-      <ThemeContext.Provider value={{ theme: 'dark', toggleTheme }}>
-        {children}
-      </ThemeContext.Provider>
+    const x = opts?.x ?? window.innerWidth / 2;
+    const y = opts?.y ?? window.innerHeight / 2;
+    const radius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y),
     );
-  }
+
+    const transition = doc.startViewTransition(() => applyTheme(next));
+
+    transition.ready.then(() => {
+      document.documentElement.animate(
+        {
+          clipPath: [
+            `circle(0px at ${x}px ${y}px)`,
+            `circle(${radius}px at ${x}px ${y}px)`,
+          ],
+        },
+        {
+          duration: 550,
+          easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+          pseudoElement: "::view-transition-new(root)",
+        },
+      );
+    });
+  }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

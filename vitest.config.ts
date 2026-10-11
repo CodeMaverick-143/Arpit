@@ -8,6 +8,8 @@ export default defineConfig({
     environment: "jsdom",
     globals: true,
     setupFiles: ["./vitest.setup.ts"],
+    // Playwright specs live in tests/ and use a different runner
+    exclude: ["**/node_modules/**", "tests/**", ".next/**"],
   },
   resolve: {
     alias: {

@@ -1,22 +1,13 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
+import { useScroll } from "framer-motion";
 
+/**
+ * Page scroll progress as framer MotionValues (0 → 1 and raw px).
+ * No React state is touched on scroll, so consumers can bind the values
+ * straight to `style` without re-rendering.
+ */
 export function useScrollProgress() {
-  const [progress, setProgress] = useState(0);
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScroll = window.scrollY;
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      setScrollY(currentScroll);
-      setProgress(totalHeight > 0 ? currentScroll / totalHeight : 0);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  return { progress, scrollY };
+  const { scrollY, scrollYProgress } = useScroll();
+  return { progress: scrollYProgress, scrollY };
 }

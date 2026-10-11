@@ -1,5 +1,9 @@
+import type { TechIconKey } from "@/lib/techIcons";
+
 export interface Skill {
   name: string;
+  /** Key from lib/techIcons.ts (TECH_ICONS); omit to resolve from the name */
+  icon?: TechIconKey;
   colorVariant: "emerald" | "blue" | "violet" | "amber" | "slate";
   proof: string; // e.g. "Production", "Built Projects", "Open Source"
   detail: string; // one-liner on what you used it for
@@ -18,30 +22,35 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       {
         name: "React",
+        icon: "react",
         colorVariant: "emerald",
         proof: "Built Projects",
         detail: "Primary library for web and mobile (React Native) UI",
       },
       {
         name: "Next.js",
+        icon: "nextjs",
         colorVariant: "blue",
         proof: "Open Source",
         detail: "SSR/SSG apps and visual dashboards for CLI tools",
       },
       {
         name: "TypeScript",
+        icon: "typescript",
         colorVariant: "blue",
         proof: "Production",
         detail: "Typed development across the MERN stack",
       },
       {
         name: "Tailwind CSS",
+        icon: "tailwindcss",
         colorVariant: "emerald",
         proof: "Production",
         detail: "Crafting responsive, utility-first interfaces",
       },
       {
         name: "Figma",
+        icon: "figma",
         colorVariant: "violet",
         proof: "Design",
         detail: "Prototyping and high-fidelity UI design",
@@ -54,30 +63,35 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       {
         name: "Node.js / Express",
+        icon: "nodejs",
         colorVariant: "emerald",
         proof: "Production",
         detail: "Scalable REST APIs for Q-A and CLI platforms",
       },
       {
         name: "Go (Golang)",
+        icon: "go",
         colorVariant: "blue",
         proof: "Built Projects",
         detail: "Systems backend with structured logging and YAML",
       },
       {
         name: "Python / Django",
+        icon: "django",
         colorVariant: "violet",
         proof: "Built Projects",
         detail: "Scripting, backend logic, and AI integrations",
       },
       {
         name: "Prisma ORM",
+        icon: "prisma",
         colorVariant: "blue",
         proof: "Production",
         detail: "Type-safe database management in TypeScript",
       },
       {
         name: "SQL",
+        icon: "mysql",
         colorVariant: "blue",
         proof: "Production",
         detail: "Relational database architecture for student/mgmt systems",
@@ -90,18 +104,21 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       {
         name: "React Native",
+        icon: "react",
         colorVariant: "blue",
         proof: "Open Source",
         detail: "Building cross-platform apps (iOS/Android)",
       },
       {
         name: "Redux",
+        icon: "redux",
         colorVariant: "violet",
         proof: "Built Projects",
         detail: "Complex state management for mobile and web",
       },
       {
         name: "Mobile UI Patterns",
+        icon: "mobile",
         colorVariant: "blue",
         proof: "Built Projects",
         detail: "Navigation, gestures, and performance optimization",
@@ -114,24 +131,28 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       {
         name: "PostgreSQL / MySQL",
+        icon: "postgresql",
         colorVariant: "blue",
         proof: "Production",
         detail: "Relational data modeling for complex systems",
       },
       {
         name: "MongoDB",
+        icon: "mongodb",
         colorVariant: "blue",
         proof: "Production",
         detail: "Flexible document storage for real-time applications",
       },
       {
         name: "Supabase",
+        icon: "supabase",
         colorVariant: "violet",
         proof: "Built Projects",
         detail: "Real-time database and authentication for Q-A apps",
       },
       {
         name: "Docker",
+        icon: "docker",
         colorVariant: "violet",
         proof: "DevOps",
         detail: "Containerizing applications for consistent deployment",
@@ -144,24 +165,28 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       {
         name: "Rust",
+        icon: "rust",
         colorVariant: "violet",
         proof: "Open Source",
         detail: "High-performance systems logic in Tauri/Recoil",
       },
       {
         name: "Tauri v2",
+        icon: "tauri",
         colorVariant: "violet",
         proof: "Open Source",
         detail: "Next-gen desktop app development with Rust",
       },
       {
         name: "Linux",
+        icon: "linux",
         colorVariant: "blue",
         proof: "Open Source",
         detail: "System administration and CLI utility development",
       },
       {
         name: "Git & Github",
+        icon: "github",
         colorVariant: "emerald",
         proof: "1500+ Contributions",
         detail: "Version control and automated GitHub Actions",
@@ -174,24 +199,28 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       {
         name: "LLM Fine-tuning",
+        icon: "pytorch",
         colorVariant: "violet",
         proof: "Built Projects",
         detail: "Applied PEFT and QLoRA for model optimization",
       },
       {
         name: "LangChain",
+        icon: "langchain",
         colorVariant: "amber",
         proof: "Exploring",
         detail: "Building sophisticated AI agent workflows",
       },
       {
         name: "Pandas / NumPy",
+        icon: "pandas",
         colorVariant: "violet",
         proof: "Data Tools",
         detail: "Data manipulation and mathematical processing",
       },
       {
         name: "Matplotlib",
+        icon: "matplotlib",
         colorVariant: "violet",
         proof: "Data Tools",
         detail: "Scientific data visualization and plotting",

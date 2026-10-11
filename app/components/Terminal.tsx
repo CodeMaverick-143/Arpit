@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useCallback } from 'react';
-import { motion } from 'framer-motion';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { useState, useEffect, useCallback } from "react";
+import { motion } from "framer-motion";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 interface TerminalLine {
-  type: 'prompt' | 'command' | 'output' | 'empty';
+  type: "prompt" | "command" | "output" | "empty";
   text: string;
   delay?: number;
 }
@@ -19,17 +19,17 @@ interface TerminalProps {
 
 export default function Terminal({
   lines,
-  title = 'terminal',
-  className = '',
+  title = "terminal",
+  className = "",
   autoStart = true,
 }: TerminalProps) {
   const [visibleLines, setVisibleLines] = useState<number>(0);
-  const [currentText, setCurrentText] = useState('');
+  const [currentText, setCurrentText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const prefersReducedMotion = useReducedMotion();
 
   const typeText = useCallback(
-    (text: string, lineIndex: number) => {
+    (text: string) => {
       return new Promise<void>((resolve) => {
         if (prefersReducedMotion) {
           setCurrentText(text);
@@ -50,7 +50,7 @@ export default function Terminal({
         }, 30);
       });
     },
-    [prefersReducedMotion]
+    [prefersReducedMotion],
   );
 
   useEffect(() => {
@@ -59,14 +59,14 @@ export default function Terminal({
     const runSequence = async () => {
       for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
-        const delay = line.delay || (line.type === 'output' ? 300 : 500);
+        const delay = line.delay || (line.type === "output" ? 300 : 500);
 
         await new Promise((r) => setTimeout(r, delay));
 
-        if (line.type === 'command') {
-          await typeText(line.text, i);
+        if (line.type === "command") {
+          await typeText(line.text);
         } else {
-          setCurrentText('');
+          setCurrentText("");
         }
 
         setVisibleLines(i + 1);
@@ -84,7 +84,10 @@ export default function Terminal({
           <span className="terminal-dot yellow" />
           <span className="terminal-dot green" />
         </div>
-        <span className="flex-1 text-center brand-mono text-[10px] uppercase tracking-widest" style={{ color: 'var(--text-tertiary)' }}>
+        <span
+          className="flex-1 text-center brand-mono text-[10px] uppercase tracking-widest"
+          style={{ color: "var(--text-tertiary)" }}
+        >
           {title}
         </span>
         <div className="w-12" /> {/* Balancing spacer */}
@@ -92,16 +95,18 @@ export default function Terminal({
       <div className="terminal-body font-code">
         {lines.slice(0, visibleLines).map((line, i) => (
           <div key={i} className="min-h-[1.6rem] flex items-start gap-3">
-            {line.type === 'command' && (
+            {line.type === "command" && (
               <div className="flex gap-2 w-full">
                 <span className="terminal-prompt select-none">❯</span>
                 <span className="terminal-command break-all">
                   {i === visibleLines - 1 && isTyping ? currentText : line.text}
                 </span>
-                {i === visibleLines - 1 && isTyping && <span className="terminal-cursor" />}
+                {i === visibleLines - 1 && isTyping && (
+                  <span className="terminal-cursor" />
+                )}
               </div>
             )}
-            {line.type === 'output' && (
+            {line.type === "output" && (
               <motion.div
                 initial={{ opacity: 0, x: -5 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -110,7 +115,7 @@ export default function Terminal({
                 {line.text}
               </motion.div>
             )}
-            {line.type === 'empty' && <br />}
+            {line.type === "empty" && <br />}
           </div>
         ))}
         {visibleLines === lines.length && !isTyping && (
